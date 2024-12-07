@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NELLA MENTE DI YE</title>
+        <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Richiedi Artista</h1>
+            <form id="myFormYE" action="/search-artist" method="POST">
+                <input type="text" name="artistName" placeholder="Inserisci il nome dell'artista" required>
+                <button type="submit">Cerca Artista</button>
+            </form>
+            
+            <div id="responseContainer"></div>
+        </div>
+
+        <script type="text/javascript" src="index.js"></script>
+    </body>
+</html>
