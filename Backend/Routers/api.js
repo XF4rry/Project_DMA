@@ -56,7 +56,7 @@ async function getArtistIdByName(artistName, accessToken) {
     if (data.artists.items.length > 0) {
         return data.artists.items[0].id; // Restituisce l'ID del primo artista trovato
     } else {
-        throw new Error('No artist found with that name.');
+        throw new Error('No artist found with that name.'); //siums
     }
 }
 
