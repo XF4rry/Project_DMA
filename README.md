@@ -25,4 +25,4 @@ Descrizione breve dell'applicativo, ad esempio: "Un'applicazione web che permett
 
 1. Clona il repository:  
    ```bash  
-   git clone https://github.com/XF4rry/DMA_Project.git
+   git clone https://github.com/XF4rry/Project_DMA.git
