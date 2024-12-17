@@ -75,7 +75,7 @@ router.post(`/search-artist`, async (req, res) => {
 });
 
 // Endpoint originale per ottenere i dati dell'artista
-router.post(`/kanye`, async (req, res) => {
+/*router.post(`/kanye`, async (req, res) => {
     const urlArtitsData = 'https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg';
 
     try {
@@ -102,6 +102,6 @@ router.post(`/kanye`, async (req, res) => {
         console.error('Error:', error.message);
         res.status(500).json({ error: error.message });
     }
-});
+});*/
 
 module.exports = router;

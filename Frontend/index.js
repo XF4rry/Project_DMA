@@ -30,11 +30,8 @@ $(document).ready(function() {
         .then(data => {
             // Costruisci l'HTML per aggiornare il contenitore con i dati dell'artista
             const htmlContent = `
-                <p><strong>Nome:</strong> ${data.name}</p>
-                <p><strong>Popolarità:</strong> ${data.popularity}</p>
-                <p><strong>Generi:</strong> ${data.genres.join(', ')}</p>
-                <p><strong>Immagine:</strong></p>
-                <img src="${data.images[0].url}" alt="${data.name}" style="width: 200px;" />
+                <p><strong>Nome:</strong> ${data.artistName}</p>
+                <p><strong>ID:</strong> ${data.artistId}</p>
             `;
             
             // Aggiorna solo la parte della pagina desiderata
@@ -46,3 +43,4 @@ $(document).ready(function() {
         });
     });
 });
+
