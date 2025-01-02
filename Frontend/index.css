@@ -54,6 +54,8 @@ button:hover {
 }
 
 #responseContainer {
+    width: 75%;
+    height: 500px;
     margin-top: 20px;
     font-size: 14px;
     color: #333;
