@@ -1,6 +1,6 @@
 # Spotify Companion
 
-Descrizione breve dell'applicativo, ad esempio: "Un'applicazione web che permette agli utenti di esplorare la musica su Spotify, creando playlist personalizzate e scoprendo nuovi brani."  
+"Un'applicazione web che permette agli utenti di esplorare la musica su Spotify, creando playlist personalizzate e scoprendo nuovi brani."  
 
 ## Caratteristiche  
 
