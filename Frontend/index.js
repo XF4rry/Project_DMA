@@ -28,30 +28,39 @@ $(document).ready(function() {
             return response.json(); // Converte la risposta in JSON
         })
         .then(data => {
-            console.log('Dati dell\'artista:', data);
-            console.log('ID dell\'artista:', data.id);
-            console.log('URL dell\'embed:' + `https://open.spotify.com/embed/${data.type}/${data.id}?utm_source=generator&theme=0`)
-
-            //console.log('vaffanculo');
-            // Costruisci l'HTML per aggiornare il contenitore con i dati dell'artista
-            //per id dell'artista <p><strong>ID:</strong> ${dati.id}</p>
-            
-            /*const htmlContent = `
-                <p><strong>Nome:</strong> ${dati.name}</p>   
-                <p><strong>Genere:</strong> ${dati.genres}</p>
-                <p><strong>Tipo:</strong> ${dati.type}</p>
-                <img src="${dati.images[0].url}" alt="Immagine dell'artista">
-                <style>
-                    #responseContainer img {
-                        width: 200px;
-                        border-radius: 50%;
-                        margin: 20px auto;
-                    }
-                </style>`;*/
-            
-
+            console.log('Dati ricevuti:', data.playlists.items);
+            const htmlContent = `
+            <div class="grid-container">
+            <div class="grid-item">
+                    <h2>Playlist:</h2>
+                    <ul>
+                        ${data.playlists.items.map(playlist => playlist ? `<li>${playlist.name}</li>` : '').join('')}
+                    </ul>
+                </div>
+             <div class="grid-item">
+                    <h2>Tracks:</h2>
+                    <ul>
+                        ${data.tracks.items.map(track => `<li>${track.name} --> ${track.artists.map(artist => artist.name).join(', ')}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="grid-item">
+                    <h2>Albums:</h2>
+                    <ul>
+                        ${data.albums.items.map(album => `<li>${album.name}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="grid-item">
+                    <h2>Artists:</h2>
+                    <ul>
+                        ${data.artists.items.map(artist => `<li>${artist.name}</li>`).join('')}
+                    </ul>
+                </div>
+               
+            </div>
+            `;
+         //player che worka da sistemare solo grafica 
          
-            const htmlContent = `<iframe
+            /*const htmlContent = `<iframe
         title="Spotify Embed: Recommendation Playlist "
         src='https://open.spotify.com/embed/${data.type}/${data.id}?utm_source=generator&theme=0'
         width="100%"
@@ -60,7 +69,7 @@ $(document).ready(function() {
         frameBorder="0"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        >`
+        >`*/    //player servirà dopo
             // Aggiorna solo la parte della pagina desiderata
             
             document.querySelector('#responseContainer').innerHTML = htmlContent;

@@ -1,8 +1,6 @@
-ricerca artista funziona adesso è commentata 
+ricerca traccia funziona manca aggiunta tasto play 
 
-ricerca traccia con un player funziona ed è attiva 
-
-controlla search generale (da fare ) ps. togli quel cazzo di selezione fallo generalizzato 
+controlla search generale funziona (obv da sistemare gafica e utilizzo con player mus.)
 
 struttura della pagina da migliorare/rifare 
 
@@ -14,8 +12,14 @@ aggiunta / studio dockers e/o containers  ps fai un documentino così il pelato 
 
 obv grafica e frontend avanzato alla fine
 
-implementare un generatore di playlist personalizzate
+implementare un generatore di playlist personalizzate   ????? se ne abbiamo voglia obv
 
-in base alla ricerca ricaricare la pagina con l'elemento richiesto 
+elemento lo trova , al max filtrare la ricerca in base alle urgenze 
 
-fare un header / sidebar con le funzionalità base 
+suddividere come spotify i bottoni sotto la ricerca, per il tutto va bene per ora, mancano gli altri bottoni diversificati per il type 
+
+nei bottoni mettere per ricerca limit = 10 , nel tutto tenere limit =5 
+
+fare un header / sidebar con le funzionalità base (metti il player in un footer)
+
+a fianco della barra di ricerca tasto home 
