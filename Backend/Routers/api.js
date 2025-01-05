@@ -66,7 +66,7 @@ async function getAccessToken() {
     params.append('client_id', clientId);  
     params.append('client_secret', clientSecret);  
 
-    const tokenResponse = await fetch(urlToken, {  
+    const tokenResponse = await fetch(urlToken, {      //metodo per ottenere il token
         method: 'POST',  
         headers: {  
             'Content-Type': 'application/x-www-form-urlencoded',  
@@ -82,6 +82,35 @@ async function getAccessToken() {
     return tokenData.access_token;  
 }
 
+///////////////////////////////////////////////////////
+
+
+/*async function getAccount(accessToken){
+    const url = `https://api.spotify.com/v1/me`;
+
+    const response = await fetch(url, {
+        method: 'GET',  //imposto il metodo (get o post)
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,       //imposto i parametri richiesti dall'api    (allego il token)
+            'Content-Type': 'application/json'              //per fare la richiesta     (imposto il tipo di dato che voglio ricevere, in questo caso in JSON)
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Error fetching artist: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    
+    if (data.length > 0) {
+        return data; // Restituisce tutti i dati riguardanti la ricerca 
+    } else {
+        throw new Error('Nothing found with that name.'); //siums
+    }
+}
+*/
+/*
 // Funzione per cercare l'ID dell'artista
 async function getArtistIdByName(artistName, accessToken) {
     const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist`;

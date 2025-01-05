@@ -1,25 +1,24 @@
-ricerca traccia funziona manca aggiunta tasto play 
+ricerca traccia funziona manca aggiunta tasto play (adesso se click su nome la mette nel player)
 
-controlla search generale funziona (obv da sistemare gafica e utilizzo con player mus.)
+controlla search generale funziona (obv da sistemare gafica, uso con player fatto)
 
 struttura della pagina da migliorare/rifare 
 
-manca ancora il collegamento con l'account di spotify/collegamento con database 
+manca ancora il collegamento con l'account di spotify/collegamento con database --> il login è completamente gestito da spotify e utilizza la propria pagina di login (volendo qualcosa in meno da fare, per firebase vedremo)
 
-implementazione firebase ?????
+????? implementazione firebase (si potrebbe usare per gestire una sorta di storico degli eccessi per una questione di cybersecurity) ?????
 
-aggiunta / studio dockers e/o containers  ps fai un documentino così il pelato è contento 
 
-obv grafica e frontend avanzato alla fine
+aggiunta / studio dockers e/o containers  ps fai un documentino
+
+--> obv grafica e frontend avanzato alla fine <--
 
 implementare un generatore di playlist personalizzate   ????? se ne abbiamo voglia obv
 
-elemento lo trova , al max filtrare la ricerca in base alle urgenze 
-
 suddividere come spotify i bottoni sotto la ricerca, per il tutto va bene per ora, mancano gli altri bottoni diversificati per il type 
 
-nei bottoni mettere per ricerca limit = 10 , nel tutto tenere limit =5 
+nei bottoni mettere per ricerca limit = 10 , nel tutto tenere limit =5 (per adesso è limit 5 sempre, poi quando implementeremo i bottoni lo sistemiamo)
 
-fare un header / sidebar con le funzionalità base (metti il player in un footer)
+fare un header / sidebar con le funzionalità base (metti il player in un footer --> fatto) 
 
 a fianco della barra di ricerca tasto home 
