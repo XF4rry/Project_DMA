@@ -1,0 +1,24 @@
+studio documentazione web api spotify   (fatto da entrambi)
+    - player
+    - login
+    - search per singoli type
+    - search generale
+    - get user data
+    - strutture dei vari json
+    - utilizzo diversi endpoints
+
+divisione servizi in diversi router (per quello che abbiamo fatto ne bastava 1) (Pastori)
+
+ricevere e utilizzare l'access token richiesto all'api  (Rossi)
+
+ricerca per singolo tipo --> con get result from id, id trovato tramite il nome (get id from name) 
+    - artista (Pastori)
+    - traccia (Pastori)
+    - album (Rossi)
+
+ricerca traccia trasformato in search generale con anche le playlist create dagli utenti (Rossi)
+
+collegamento con l'account di spotify/collegamento con database (da finire) (Pastori)
+
+fare un footer con player (qualcosa ancora da sistemare) (Entrambi)
+
