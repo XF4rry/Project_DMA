@@ -6,7 +6,7 @@
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "fetch": "^1.1.0",
-    "firebase": "^11.1.0",
+    "firebase": "^11.2.0",
     "html": "^1.0.0"
   },
   "name": "es_david",
@@ -18,5 +18,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "firebase-tools": "^13.29.3"
+  }
 }
