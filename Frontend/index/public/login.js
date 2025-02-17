@@ -1,15 +1,14 @@
 const clientId = "9ef96b2e27c342bd9337c8b8e0dc6c94"; // id web app spotify
 const code = undefined;
 async function init() {
+    const accessToken = await getAccessToken(clientId, code);
         if (!code) {
         redirectToAuthCodeFlow(clientId);
     } else {
-        const accessToken = await getAccessToken(clientId, code);
         const profile = await fetchProfile(accessToken);
         populateUI(profile);
     }
 }
-
 
 async function redirectToAuthCodeFlow(clientId) {
     const verifier = generateCodeVerifier(128);
@@ -63,6 +62,15 @@ async function getAccessToken(clientId, code) {
         body: params
     });
 
+    if (result.ok) {        //salvo nei cookie l'hash dell'access token
+        const { access_token } = await result.json();
+        const hash = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(access_token));
+        const cookieValue = btoa(String.fromCharCode.apply(null, [...new Uint8Array(hash)]))
+            .replace(/\+/g, '-')                
+            .replace(/\//g, '_')
+            .replace(/=+$/, '');
+        document.cookie = `spotydmaAccessToken=${cookieValue}; SameSite=Strict; Secure; Path=/`;
+    }
     const { access_token } = await result.json();
     return access_token;
 }

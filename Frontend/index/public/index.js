@@ -28,31 +28,35 @@ $(document).ready(function() {
             return response.json(); // Converte la risposta in JSON
         })
         .then(data => {
-            console.log('Dati ricevuti:', data.playlists.items);
+            //const [datiSearch, accessToken] = data.split('|');
+            const datiSearch = data[0];
+            const accessToken = data[1];
+            console.log('Dati ricevuti:', datiSearch.playlists.items);
+            console.log(accessToken);
             const htmlContent = `
             <div class="grid-container">
             <div class="grid-item">
                     <h2>Playlist:</h2>
                     <ul>
-                        ${data.playlists.items.map(playlist => playlist ? `<li>${playlist.name}</li>` : '').join('')}
+                        ${datiSearch.playlists.items.map(playlist => playlist ? `<li>${playlist.name}</li>` : '').join('')}
                     </ul>
                 </div>
              <div class="grid-item">
                     <h2>Tracks:</h2>
                     <ul>
-                        ${data.tracks.items.map(track => `<li><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}'); return false;"> ${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
+                        ${datiSearch.tracks.items.map(track => `<li><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}', 4); return false;"> ${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="grid-item">
                     <h2>Albums:</h2>
                     <ul>
-                        ${data.albums.items.map(album => `<li><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/album/${album.id}?utm_source=generator&theme=0'; setCookie('albumId', '${album.id}'); return false;"> ${album.name}  -  ${album.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
+                        ${datiSearch.albums.items.map(album => `<li><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/album/${album.id}?utm_source=generator&theme=0'; setCookie('albumId', '${album.id}', 4); return false;"> ${album.name}  -  ${album.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="grid-item">
                     <h2>Artists:</h2>
                     <ul>
-                        ${data.artists.items.map(artist => `<li>${artist.name}</li>`).join('')}
+                        ${datiSearch.artists.items.map(artist => `<li>${artist.name}</li>`).join('')}
                     </ul>
                 </div>
                
@@ -88,15 +92,35 @@ $(document).ready(function() {
         localStorage.setItem(name, value);
     });
 }*/
+//ogni volta che si cambia una canzone il coockie viene aggiornato 
+function setCookie(name, value, exdays) {
+    const cookies = document.cookie.split(';');  
+    const d = new Date();                             // definisce la data di iniziazione del cookie
 
-function setCookie(name, value) {
-    const cookies = document.cookie.split('; ');
+    d.setTime(d.getTime() + (exdays*60*60*1000));     //crea il tag expires prendendo l'ora attuale e mettendo la scandenza tra 4 ore
+    let expires = "expires="+ d.toUTCString();        //converte l'expires in carattere UTC
+    
     cookies.forEach(cookie => {
         const [name, value] = cookie.split('=');
         if(name == this.name){
             cookies.splice(cookies.indexOf(cookie), 1);
         }
     });
-    document.cookie += name + "=" + value;
-    cookies.push(name, value);
+    // Imposta un nuovo cookie con il nome e il valore specificati
+    // Include anche la data di scadenza e il percorso
+    document.cookie = `${name}=${value};${expires};`;                //concatenazione degli attributi del cookie
+    cookies.push(name, value, expires);
+}
+
+function controlloAccount (){
+    if (document.cookie.includes('access_token')) {
+        document.getElementById('myFormLogin').style.display = 'none';
+        document.getElementById('myFormLogout').style.display = 'block';
+    }
+}
+
+function logout() {
+    document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';  //metto la scadenza del cookie nella passato così si cancella da solo
+    document.getElementById('myFormLogin').style.display = 'block';
+    document.getElementById('myFormLogout').style.display = 'none'; 
 }
