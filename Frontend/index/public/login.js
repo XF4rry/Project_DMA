@@ -6,7 +6,9 @@ async function init() {
         redirectToAuthCodeFlow(clientId);
     } else {
         const profile = await fetchProfile(accessToken);
-        populateUI(profile);
+        console.log(profile);
+        console.log(accessToken);
+        //populateUI(profile);
     }
 }
 

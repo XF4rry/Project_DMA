@@ -85,6 +85,41 @@ $(document).ready(function() {
     });
 });
 
+
+$(document).ready(function() {
+    // Gestore di eventi per il submit del form
+    $("#myFormLogin").submit(function(event) {
+        event.preventDefault(); // Evita il comportamento predefinito del form
+
+        // Serializza i dati del form
+        const formData = new FormData(this); // Raccoglie tutti i dati del form
+        const actionUrl = this.getAttribute('action'); // Recupera l'endpoint dal form
+
+        // Effettua una richiesta POST usando Fetch
+        fetch(actionUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // Converte la risposta in JSON
+        })
+        .then(data => {
+            
+
+        })
+        .catch(error => {
+            console.error('Errore nella richiesta:', error);
+            document.querySelector('#responseContainer').innerHTML = `<p>Errore durante il recupero dei dati.</p>`;
+        });
+    });
+});
+
+
 /*async function saveCookies() {
     const cookies = document.cookie.split('; ');
     cookies.forEach(cookie => {

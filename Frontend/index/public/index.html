@@ -7,13 +7,13 @@
         <link rel="stylesheet" href="index.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script type="text/javascript" src="index.js"></script>
-        <script type="text/javascript" src="login.js"></script>
+        <!-- <script type="text/javascript" src="login.js"></script> -->
     </head>
     <body>
         <header>
             <nav>
                 <ul>
-                    <form id="myFormLogin" method="POST" onsubmit="return init()">
+                    <form id="myFormLogin" method="POST" action="http://localhost:3000/login">
                         <button type="submit">Accedi</button>
                     </form>
                 </ul>
@@ -22,6 +22,9 @@
                         <button type="submit">Esci</button>
                     </form>
                 </ul>
+            </nav>
+            <nav>
+                
             </nav>
         </header>
         <div class="container">
