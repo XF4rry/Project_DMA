@@ -1,14 +1,14 @@
-ricerca traccia funziona manca aggiunta tasto play (adesso se click su nome la mette nel player) 
+ricerca traccia funziona manca aggiunta tasto play (adesso se click su nome la mette nel player) //defve partire subito dopo averla caricata nel player
 
 controlla search generale funziona (obv da sistemare gafica, uso con player fatto)
 
 struttura della pagina da migliorare/rifare 
 
-manca ancora il collegamento con l'account di spotify/collegamento con database --> il login è completamente gestito da spotify e utilizza la propria pagina di login (volendo qualcosa in meno da fare, per firebase vedremo)
+manca ancora il collegamento con l'account di spotify/collegamento con database --> il login è completamente gestito da spotify e utilizza la propria pagina di login (volendo qualcosa in meno da fare, per firebase vedremo)  //aggiunto, bisogna sistemare il salvataggio dell'access token e la grafica del bottone di accesso
 
-????? implementazione firebase (si potrebbe usare per gestire una sorta di storico degli eccessi per una questione di cybersecurity) ?????
+????? implementazione firebase (si potrebbe usare per gestire una sorta di storico degli eccessi per una questione di cybersecurity) ?????  //aggiungo il database per collegare access token a utente
 
-aggiunta / studio dockers e/o containers  ps fai un documentino
+aggiunta / studio dockers e/o containers  ps fai un documentino //Hell naahh
 
 --> obv grafica e frontend avanzato alla fine <--
 

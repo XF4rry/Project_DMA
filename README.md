@@ -12,17 +12,17 @@
 
 ## Tecnologie Utilizzate  
 
-- **Frontend**: ejs / HTML
-- **Backend**: Node.js / Express / axios
+- **Frontend**: ejs / HTML / css
+- **Backend**: Node.js / Express / axios / Fetch / Firebase
 - **API di Spotify**: Utilizzata per l'autenticazione e per accedere ai dati musicali.  
 
 ## Requisiti  
 
 - Node.js >= 14.x  
-- Un account su Spotify per l'autenticazione.  
+- Un account su Spotify per l'autenticazione.
 
 ## Installazione  
 
 1. Clona il repository:  
    ```bash  
-   git clone https://github.com/XF4rry/Project_DMA.git
+   git clone https://github.com/XF4rry/Project_DMA
