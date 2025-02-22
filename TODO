@@ -21,3 +21,5 @@ nei bottoni mettere per ricerca limit = 10 , nel tutto tenere limit =5 (per ades
 fare un header / sidebar con le funzionalità base (metti il player in un footer --> fatto) 
 
 a fianco della barra di ricerca tasto home 
+
+aggiungere i microservizi di auth e del gioco HoL
