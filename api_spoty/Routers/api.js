@@ -62,7 +62,7 @@ async function searchGeneralizzato(ricerca, accessToken){
    const accessTokenHash = crypto.createHash('sha256');    //crea un hash
     accessTokenHash.update(accessToken);    //mette il token dentro il hash
     const accessTokenHashString = accessTokenHash.digest('hex');    //mette il hash dentro una stringa digest in hex
-    console.log('Access Token Hash:', accessTokenHashString);   //stampo il hash 
+    //console.log('Access Token Hash:', accessTokenHashString);   //stampo il hash 
 
     const dati = [data, accessTokenHashString]
     

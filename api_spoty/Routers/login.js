@@ -10,18 +10,18 @@ router.use(BodyParser.urlencoded({ extended: true }));
 router.use(cors());
 
 
+
 const clientId = "9ef96b2e27c342bd9337c8b8e0dc6c94"; // id web app spotify
 const code = undefined;
-var profile=undefined;
+var profile = undefined;
+var accessToken = undefined;
 router.post("/login", async (req, res) => {
     try{
-        console.log(
-            "login con server"
-        );
-        const accessToken = await getAccessToken(clientId, code);
+        console.log("login con server");
         if (!code) {
-            redirectToAuthCodeFlow(clientId);
+            redirectToAuthCodeFlow(clientId, req, res);
         } else {
+            accessToken = await getAccessToken(clientId, code, req, res);
             profile = await fetchProfile(accessToken);
             console.log(profile);
             console.log(accessToken);
@@ -35,14 +35,16 @@ router.post("/login", async (req, res) => {
     }
     
 })
+
     
 
 
-async function redirectToAuthCodeFlow(clientId) {
+async function redirectToAuthCodeFlow(clientId, req, res) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
+    res.cookie('verifier', verifier, { maxAge: 3600000, secure: true, sameSite: 'strict' });
+    
 
-    localStorage.setItem("verifier", verifier);
 
     const params = new URLSearchParams();
     params.append("client_id", clientId);
@@ -67,15 +69,15 @@ function generateCodeVerifier(length) {
 
 async function generateCodeChallenge(codeVerifier) {
     const data = new TextEncoder().encode(codeVerifier);
-    const digest = await window.crypto.subtle.digest('SHA-256', data);
+    const digest = await crypto.subtle.digest('SHA-256', data);
     return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
         .replace(/=+$/, '');
 }
 
-async function getAccessToken(clientId, code) {
-    const verifier = localStorage.getItem("verifier");
+async function getAccessToken(clientId, code, req, res) {
+    const verifier = req.cookies['verifier'];
 
     const params = new URLSearchParams();
     params.append("client_id", clientId);
@@ -97,7 +99,7 @@ async function getAccessToken(clientId, code) {
             .replace(/\+/g, '-')                
             .replace(/\//g, '_')
             .replace(/=+$/, '');
-        document.cookie = `spotydmaAccessToken=${cookieValue}; SameSite=Strict; Secure; Path=/`;
+        res.cookie('spotydmaAccessToken', cookieValue, { httpOnly: true, secure: true, sameSite: 'strict', path: '/' });
     }
     const { access_token } = await result.json();
     return access_token;
