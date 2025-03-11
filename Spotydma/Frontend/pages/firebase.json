@@ -1,0 +1,23 @@
+{
+  "hosting": {
+    "public": "index",
+    "rewrites": [
+      {
+        "source": "song",
+        "destination": "/song"
+      },
+      {
+        "source": "monthly",
+        "destination": "/monthly"
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}
