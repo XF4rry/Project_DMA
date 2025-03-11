@@ -3,12 +3,12 @@
     "public": "index",
     "rewrites": [
       {
-        "source": "song",
-        "destination": "/song"
+        "source": "/song",
+        "destination": "/song/song.html"
       },
       {
-        "source": "monthly",
-        "destination": "/monthly"
+        "source": "/monthly",
+        "destination": "/monthly/monthly.html"
       }
     ],
     "ignore": [
