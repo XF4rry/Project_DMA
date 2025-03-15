@@ -1,14 +1,21 @@
 {
   "hosting": {
     "public": "index",
-    "rewrites": [
+    "redirects": [
       {
         "source": "/song",
-        "destination": "/song/song.html"
+        "destination": "/song/song.html",
+        "type": 301
+      },
+      {
+        "source": "/select",
+        "destination": "/selectCat/select.html",
+        "type": 301
       },
       {
         "source": "/monthly",
-        "destination": "/monthly/monthly.html"
+        "destination": "/monthly/monthly.html",
+        "type": 301
       }
     ],
     "ignore": [
