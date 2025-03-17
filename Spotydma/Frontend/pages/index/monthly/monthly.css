@@ -209,3 +209,25 @@ img {
   .buttons button:focus {
     outline: 0;
   }
+
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .next {
+    justify-self: right;
+    width: 50vw; height: 50vh;
+  }
+
+  .current {
+    justify-self: left;
+    width: 50vw; height: 50vh;
+  }
+  .score {
+    flex: 0 0 300px;
+    text-align: center;
+    justify-self: center;
+  }
