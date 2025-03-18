@@ -101,6 +101,7 @@ $(document).ready(function() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'x-service': 'api'
             }
         })
         .then(response => {

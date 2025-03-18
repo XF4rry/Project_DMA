@@ -1,12 +1,10 @@
-const { response } = require("express");
-
-const artists = fetch('http://localhost:3000/getData', headers = { 'Content-Type': 'application/json','x-service': 'game'}).then(response  => response.json()); // Carica i dati degli artisti
+const data = fetch('http://localhost:3000/getData', headers = { 'Content-Type': 'application/json','x-service': 'game'}).then(response  => response.json()); // Carica i dati degli artisti
 let currentArtist, nextArtist;
 let score = 0;
 let nick;
 
 function getRandomArtist() {
-    return artists[Math.floor(Math.random() * artists.length)];
+    return data[Math.floor(Math.random() * data.length)];
 }
 
 function displayArtist(artist, elementId) {
