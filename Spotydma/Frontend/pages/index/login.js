@@ -13,6 +13,16 @@ async function init() {
     }
 }
 
+
+$(document).ready(function() {
+    // Gestore di eventi per il submit del form
+    $("#myFormLogin").submit(function(event) {
+        event.preventDefault(); // Evita il comportamento predefinito del form
+
+        init();
+    });
+});
+
 async function redirectToAuthCodeFlow(clientId) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);

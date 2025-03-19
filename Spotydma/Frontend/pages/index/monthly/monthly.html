@@ -1,12 +1,10 @@
-
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Higher or Lower: Spotify</title>
        <!-- <script src="spotifymonthly-data.js"></script> -->
-        <script type="text/javascript" src="monthly.js"></script>
+       <!-- <script type="text/javascript" src="monthly.js"></script> -->
         <link rel="stylesheet" href="monthly.css">
     </head>
 
@@ -34,7 +32,7 @@
             </div>
         </div>
         <script>
-            const data = fetch('http://localhost:3000/getData', headers = { 'Content-Type': 'application/json','x-service': 'game'}).then(response  => response.json()); // Carica i dati degli artisti
+            const data = fetch('http://localhost:3001/getDataMonth', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-service': 'game'}}).then(response  => response.json()); // Carica i dati degli artisti
             let currentArtist, nextArtist;
             let score = 0;
             let nick;
@@ -54,7 +52,7 @@
             function startGame() {
                 currentArtist = getRandomArtist();
                 nextArtist = getRandomArtist();
-                while (currentArtist.id === nextArtist.id) {
+                while (currentArtist.title === nextArtist.title) {
                     nextArtist = getRandomArtist();
                 }
                 displayArtist(currentArtist, "current");
@@ -86,7 +84,7 @@
                     nick = document.getElementById("Nickname").innerText;
                     currentArtist = nextArtist;
                     nextArtist = getRandomArtist();
-                    while (currentArtist.id === nextArtist.id) {
+                    while (currentArtist.title === nextArtist.title) {
                         nextArtist = getRandomArtist();
                     }
                     displayArtist(currentArtist, "current");

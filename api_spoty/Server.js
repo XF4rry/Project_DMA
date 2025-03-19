@@ -3,7 +3,7 @@ const BodyParser = require('body-parser');
 const cors = require('cors');   //import il middleware cors (midware --> lavora tra l'OS e le applicazioni) 
 const axios = require('axios');
 var routerApi = require('./Routers/api');
-var routerLogin = require('./Routers/login')
+//var routerLogin = require('./Routers/login_nonusato')
 const ejs = require('ejs');
 
 
@@ -24,7 +24,7 @@ app.use(cors());    //utilizzo il middleware cors
     res.json(req.body);*/
 
     app.use(routerApi);
-    app.use(routerLogin);
+    //app.use(routerLogin);
 
 app.listen(port, "0.0.0.0", () => { //apro la porta del server e aspetto le richieste
     console.log(`Example app listening on port ${port}`)

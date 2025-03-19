@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
 async function redirectToAuthCodeFlow(clientId, req, res) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
-    res.cookie('verifier', verifier, { maxAge: 3600000, secure: true, sameSite: 'strict' });
+    //res.cookie('verifier', verifier, { maxAge: 3600000, secure: true, sameSite: 'strict' });
     
 
 

@@ -87,11 +87,11 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
+/*$(document).ready(function() {
     // Gestore di eventi per il submit del form
     $("#myFormLogin").submit(function(event) {
         event.preventDefault(); // Evita il comportamento predefinito del form
-
+        
         // Serializza i dati del form
         const formData = new FormData(this); // Raccoglie tutti i dati del form
         const actionUrl = this.getAttribute('action'); // Recupera l'endpoint dal form
@@ -118,8 +118,9 @@ $(document).ready(function() {
             console.error('Errore nella richiesta:', error);
             document.querySelector('#responseContainer').innerHTML = `<p>Errore durante il recupero dei dati.</p>`;
         });
+        
     });
-});
+});*/
 
 
 /*async function saveCookies() {

@@ -13,19 +13,34 @@ const services = {
     api: 'http://localhost:3000'
 };
 
-app.use(async (req, res, next) => {
+app.use(async (req, res) => {
     /**
      * Questo middleware si occupa di instradare le richieste ai vari servizi.
      * La richiesta viene inoltrata al servizio specificato nell'header 'x-service'.
      * Se l'header 'x-service' non  presente o non corretto, viene restituito un errore 400.
      */
-    const service = services[req.header('x-service')];
-    console.log("passato dal gateway");
-    if (!service) {
+    var service;
+    try {
+        service = services[req.header('x-service')];
+        console.log(service)
+        console.log(req.header('x-service'));
+        console.log("passato dal gateway");
+        if (!service) {
+            return res.status(400).send({ error: 'x-service header is missing or invalid' });
+        }
+    } catch (error) {
+        console.error(error);
         return res.status(400).send({ error: 'x-service header is missing or invalid' });
     }
-    const url = `${service}${req.url}`;
-    console.log("url: " + url);
+    
+    let url;
+    try {      
+        url = `${service}${req.url}`;
+        console.log("url: " + url);
+    } catch (error) {
+        console.error(error);
+        return res.status(400).send({ error: 'x-service header is missing or invalid' });
+    }
     /**
      * Prendo la richiesta originale e la inoltro al servizio corrispondente.
      * La response ricevuta dal servizio viene inoltrata al client.
