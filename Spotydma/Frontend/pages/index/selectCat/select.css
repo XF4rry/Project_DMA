@@ -1,24 +1,67 @@
+/* Google Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
 body {
-    text-align: center;
-    font-family: Arial, sans-serif;
-}
-h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-ul {
-    list-style-type: none;
+    margin: 0;
     padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #121212; /* Nero Spotify */
+    color: white;
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
 }
-li {
-    margin-right: 20px;
+
+.container {
+    background: rgba(18, 18, 18, 0.9);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    border: 1px solid #1DB954; /* Verde Spotify */
 }
-a {
-    color: #333;
+
+h1 {
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Lista senza punti */
+.game-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Stile per i bottoni */
+.game-list li {
+    margin: 15px 0;
+}
+
+.game-list a {
     text-decoration: none;
+    color: #000;
+    background: #1DB954; /* Verde Spotify */
+    padding: 14px 25px;
+    border-radius: 30px; /* Arrotondato come Spotify */
+    display: inline-block;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(29, 185, 84, 0.3);
 }
-a:hover {
-    color: #666;
+
+/* Hover e animazione */
+.game-list a:hover {
+    background: #1ed760; /* Verde più chiaro */
+    transform: scale(1.08);
+    box-shadow: 0px 6px 15px rgba(29, 185, 84, 0.5);
+}
+
+/* Effetto click */
+.game-list a:active {
+    transform: scale(0.95);
 }

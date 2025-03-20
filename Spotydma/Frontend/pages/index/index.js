@@ -37,25 +37,25 @@ $(document).ready(function() {
             const htmlContent = `
             <div class="grid-container">
             <div class="grid-item">
-                    <h2>Playlist:</h2>
+                    <h2 id:"title">Playlist:</h2>
                     <ul>
                         ${datiSearch.playlists.items.map(playlist => playlist ? `<li>${playlist.name}</li>` : '').join('')}
                     </ul>
                 </div>
              <div class="grid-item">
-                    <h2>Tracks:</h2>
+                    <h2 id:"title">Tracks:</h2>
                     <ul>
-                        ${datiSearch.tracks.items.map(track => `<li><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}', 4); return false;"> ${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
+                        ${datiSearch.tracks.items.map(track => `<li> <img  src="${track.album.images[2].url}" alt="${track.name}"> <a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}', 4); return false;">${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="grid-item">
-                    <h2>Albums:</h2>
+                    <h2 id:"title">Albums:</h2>
                     <ul>
                         ${datiSearch.albums.items.map(album => `<li><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/album/${album.id}?utm_source=generator&theme=0'; setCookie('albumId', '${album.id}', 4); return false;"> ${album.name}  -  ${album.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="grid-item">
-                    <h2>Artists:</h2>
+                    <h2 id:"title">Artists:</h2>
                     <ul>
                         ${datiSearch.artists.items.map(artist => `<li>${artist.name}</li>`).join('')}
                     </ul>

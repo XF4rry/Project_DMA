@@ -30,6 +30,7 @@ function gameEnd(score){
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'x-service': 'game'
         },
         body: JSON.stringify({score: score, nick: nick}),
     }).then(response => response.text())

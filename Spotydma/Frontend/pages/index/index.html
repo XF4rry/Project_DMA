@@ -14,24 +14,25 @@
             <nav>
                 <ul>
                     <form id="myFormLogin" method="POST" onclick="">
-                        <button type="submit">Accedi</button>
+                        <button oid=" " type="submit">Accedi</button>
                     </form>
                 </ul>
-                <ul>
+                <!--<ul>
                     <form id="myFormLogout" method="POST" onsubmit="">
                         <button type="submit">Esci</button>
                     </form>
-                </ul>
+                </ul>-->
                 <ul>
-                    <a href="/select" class="">Gioca!</a>
+                    <a href="/select" class="spotify-button">Gioca!</a>
                 </ul>
+                
             </nav>
             <nav>
                 
             </nav>
         </header>
         <div class="container">
-            <h1>Richiedi Artista</h1>
+            <h1>Cosa vuoi ascoltare?</h1>
             <form id="myFormYE" action="http://localhost:3001/search-artist" method="POST">
                 <input type="text" name="search" placeholder="Inserisci il nome dell'artista" required>
                 <button type="submit">Cerca Artista</button>

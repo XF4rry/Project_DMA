@@ -1,32 +1,98 @@
 @import "tailwindcss";
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212; /* Sfondo scuro Spotify */
     margin: 0;
     padding-bottom: 175px;
     bottom: 5%;
+    color: white;
 }
 
+/* Contenitore principale */
 .container {
     width: 80%;
     max-width: 600px;
     margin: 50px auto;
-    background-color: #ffffff;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    background-color: #181818; /* Grigio scuro Spotify */
+    padding: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    text-align: center;
 }
 
+/* Titolo */
 h1 {
     text-align: center;
-    color: #333;
+    color: white;
+    font-weight: 700;
 }
 
+/* Form */
 form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
+
+/* Label */
+label {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #b3b3b3; /* Grigio chiaro Spotify */
+}
+
+/* Input */
+input[type="text"] {
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    text-align: center;
+    background: #282828; /* Nero Spotify */
+    color: white;
+    outline: none;
+}
+
+/* Bottone */
+button {
+    padding: 14px;
+    background-color: #1DB954; /* Verde Spotify */
+    color: black;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px; /* Stile arrotondato Spotify */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+}
+
+/* Risultati */
+#responseContainer {
+    width: 75%;
+    height: auto;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #b3b3b3; /* Grigio chiaro */
+    text-align: left;
+}
+#responseContainer .title {
+    text-align: center;
+    justify-content: center;
+}
+
+/* Form di login */
+#myFormLogin {
+    display: block;
+}
+
+/* Footer mantenuto invariato */
+
 
 #footer {
     position: fixed;
@@ -54,46 +120,59 @@ form {
     width: 100%;
     
 }
+/* Bottone "Gioca!" in stile Spotify */
+.spotify-button {
+    display: inline-block;
+    background-color: #1DB954; /* Verde Spotify */
+    color: black;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 14px 30px;
+    border-radius: 30px; /* Arrotondato come su Spotify */
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
 
-label {
-    margin-bottom: 10px;
+.spotify-button:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+}
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.grid-item {
+    text-align: left; /* Allinea tutto a sinistra */
+    font-size: 11pt; /* Imposta la dimensione del testo */
+}
+
+/* Rimuove i punti elenco */
+.grid-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Modifica i titoli */
+.grid-item h2 {
+    font-size: 14pt;
     font-weight: bold;
-    color: #555;
+    margin-bottom: 5px;
+    color: #fff; /* Testo bianco (se il background è scuro) */
 }
 
-input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    font-size: 16px;
+/* Stile per i link */
+.grid-item a {
+    text-decoration: none;
+    color: #1DB954; /* Verde Spotify */
+    font-weight: 600;
 }
 
-button {
-    padding: 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-#responseContainer {
-    width: 75%;
-    height: auto;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #333;
-}
-
-#myFormLogin{
-    display: block;
-}
-#myFormLogout{
-    display: none;
+.grid-item a:hover {
+    text-decoration: underline;
+    color: #1ed760;
 }

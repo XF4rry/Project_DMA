@@ -10,16 +10,19 @@ async function init() {
         console.log(profile);
         console.log(accessToken);
         //populateUI(profile);
+         
     }
+
 }
+
 
 
 $(document).ready(function() {
     // Gestore di eventi per il submit del form
     $("#myFormLogin").submit(function(event) {
         event.preventDefault(); // Evita il comportamento predefinito del form
-
         init();
+        
     });
 });
 
@@ -38,6 +41,7 @@ async function redirectToAuthCodeFlow(clientId) {
     params.append("code_challenge", challenge);
 
     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
+
 }
 
 function generateCodeVerifier(length) {
@@ -92,6 +96,7 @@ async function fetchProfile(token) {
     const result = await fetch("https://api.spotify.com/v1/me", {
         method: "GET", headers: { Authorization: `Bearer ${token}` }
     });
-
+    const element = document.getElementById("accedi"); //non ammazzarmi
+    element.innerText = "Esci";
     return await result.json();
 }
