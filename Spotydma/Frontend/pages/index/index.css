@@ -176,3 +176,9 @@ button:hover {
     text-decoration: underline;
     color: #1ed760;
 }
+
+img.albumCover {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}

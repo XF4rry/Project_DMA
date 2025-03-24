@@ -14,21 +14,22 @@
                 <div class="title">
                     <h1>Higher or Lower: Monthly Listeners</h1>
                     <li><a href="/">Home</a></li> 
+                    <li><a href="/select">scegli modalità</a></li> 
                 </div>
                 <div class="buttons">
                     <button class="btn" onclick="startGame()"><span></span><p data-start="good luck!" data-text="start!" data-title="new game"></p></button>
                 </div>
                 <div class="Nickname"><input type="text" placeholder="Nickname..."></div>
                 <div class="container">
-                    <button class="current" onclick="checkGuess(false)">
+                    <button class="current" id="current" onclick="checkGuess(false)">
                         
                     </button>
-                    <button class="next" onclick="checkGuess(true)">
-                      
-                    </button>
-                    <div class="score">
+                    <div class="score" id="score">
 
                     </div>
+                    <button class="next" id="next" onclick="checkGuess(true)">
+                      
+                    </button>
                 </div>
                 
             </div>
@@ -69,16 +70,47 @@
                 //console.log(i);
                 return dati[i];
             }
+
+            function getImage(query){
+                fetch("http://localhost:3001/getImage", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-service': 'game'
+                    },
+                    body: JSON.stringify({nome: this.query})    
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    return data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            }
     
             function displayArtist(artist, elementId) {
-                document.getElementById(elementId).innerHTML = `
-                    <h2>${artist.title}</h2>
-                    <img src="${artist.sourceImage}" alt="${artist.title}">
-                    <p>Play Count: ${artist.playCount}</p>
-                `;
+                try{
+                    const img = getImage(artist.title);
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        element.innerHTML = `
+                            <h2>${artist.title}</h2>
+                            <img src="${img}" alt="${artist.title}">
+                            <p>Play Count: ${artist.playCount}</p>
+                        `;
+                    } else {
+                        console.error(`Element with id ${elementId} not found.`);
+                    }
+                } 
+                catch{
+                    console.error("errore");
+                }
             }
     
             function startGame() {
+                score = 0;
                 currentArtist = getRandomArtist();
                 nextArtist = getRandomArtist();
                 while (currentArtist.title === nextArtist.title) {

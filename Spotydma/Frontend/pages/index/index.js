@@ -45,7 +45,7 @@ $(document).ready(function() {
              <div class="grid-item">
                     <h2 id:"title">Tracks:</h2>
                     <ul>
-                        ${datiSearch.tracks.items.map(track => `<li> <img  src="${track.album.images[2].url}" alt="${track.name}"> <a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}', 4); return false;">${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
+                        ${datiSearch.tracks.items.map(track => `<li>  <img id="albumCover" src="${track.album.images[0]?.url || 'https://png.pngtree.com/png-vector/20241012/ourlarge/pngtree-cat-listening-to-music-with-headphones-png-image_13995938.png'}" height="40px" width="40px" alt=""> <a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}', 4); return false;">${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="grid-item">
@@ -76,6 +76,8 @@ $(document).ready(function() {
         loading="lazy"
         >`*/    //player servirà dopo
             // Aggiorna solo la parte della pagina desiderata
+
+            //<img id="albumCover" src="${track.album.images[0].url}" height="40px" width="40px" alt="${track.name}">
             
             document.querySelector('#responseContainer').innerHTML = htmlContent;
         })

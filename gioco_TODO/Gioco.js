@@ -47,10 +47,21 @@ async function getUsers(db) {
   });
 }
 
+
 //getUsers(db);
 
 
-app.use(express.json());
+async function cercaImmagine(query) {
+    const url = `https://api.openverse.engineering/v1/images/?q=${query}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (data.results.length > 0) {
+        return data.results[0].url;
+    } else {
+        return "Nessuna immagine trovata.";
+    }
+}
 
 app.post('/saveScore', (req, res) => {
     const score = req.body.score;
@@ -59,6 +70,13 @@ app.post('/saveScore', (req, res) => {
     createUser(db, score, nick);
     res.sendStatus(200);
 });
+
+app.post('/getImage', (req, res) => {
+    const query = req.body.nome;
+    cercaImmagine(query).then((url) => {
+        res.json({ url });
+    });
+})
 
 app.post('/getDataMonth', (req, res) => {
     res.json(dataMonth);
