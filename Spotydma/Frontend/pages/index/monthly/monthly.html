@@ -71,7 +71,7 @@
                 return dati[i];
             }
 
-            function getImage(query){
+            function getImages(query){
                 fetch("http://localhost:3001/getImage", {
                     method: 'POST',
                     headers: {
@@ -92,7 +92,7 @@
     
             function displayArtist(artist, elementId) {
                 try{
-                    const img = getImage(artist.title);
+                    const img = getImages(artist.title);
                     const element = document.getElementById(elementId);
                     if (element) {
                         element.innerHTML = `
@@ -153,7 +153,7 @@
                     displayArtist(nextArtist, "next");
                 } else {
                     alert("Game Over! Your score: " + score);
-                    gameEnd(score);
+                    //gameEnd(score);
                     score = 0;
                 }
             }
