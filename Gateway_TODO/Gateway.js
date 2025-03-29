@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const services = {
-    auth: 'http://localhost:3003',
+    //auth: 'http://localhost:3003',
     game: 'http://localhost:3002',
     api: 'http://localhost:3000'
 };

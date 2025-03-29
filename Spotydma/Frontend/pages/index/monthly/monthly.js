@@ -7,10 +7,11 @@ function getRandomArtist() {
     return data[Math.floor(Math.random() * data.length)];
 }
 
+//controlla questo
 function displayArtist(artist, elementId) {
     document.getElementById(elementId).innerHTML = `
         <h2>${artist.title}</h2>
-        <img src="${artist.sourceImage}" alt="${artist.title}">
+        <img src="${artist.sourceImage}" alt="${artist.title}">   
         <p>Play Count: ${artist.playCount}</p>
     `;
 }
