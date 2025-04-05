@@ -79,23 +79,24 @@
             }
 
             async function getImages(query){
-                fetch("http://localhost:3001/getImage", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-service': 'game'
-                    },
-                    body: JSON.stringify({nome: query})    
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(query)
-                    //   console.log(data);
+                try {
+                    const response = await fetch("http://localhost:3001/getImage", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-service': 'game'
+                        },
+                        body: JSON.stringify({nome: query || '404 Not Found'})    
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    console.log(query);
                     return data;
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('Error fetching data:', error);
-                });
+                }
             }
     
             async function displayArtist(artist, elementId) {    //controlla

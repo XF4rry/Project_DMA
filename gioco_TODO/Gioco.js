@@ -50,15 +50,60 @@ async function getUsers(db) {
 
 
 //getUsers(db);
+/**********************************************************************/
+
+let client_id, client_secret, token;
+async function registerToken() {
+  client_id, client_secret, token = "";
+    const url = "https://api.openverse.org/v1/auth_tokens/register/";
+    const body = {
+        "name": "spotyDMA",
+        "description": "spotyDMA",
+        "email": "christian.pastori.stud@ispascalcomandini.it"
+
+    };
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body)
+    });
+    const data = await response.json();
+    client_id = data.client_id;
+    client_secret = data.client_secret;
+    console.log(data);
+    getToken();
+}
+
+async function getToken() {
+    const url = "https://api.openverse.org/v1/auth_tokens/token/";
+    const body = {
+        "client_id": client_id,
+        "client_secret": client_secret,
+        "grant_type": "client_credentials"
+    };
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body)
+    });
+    const data = await response.json();
+    token = data.access_token;
+    console.log(data);
+}
 
 
 async function cercaImmagine(query) {
+  registerToken();
     const url = `https://api.openverse.org/v1/images/?q=${encodeURIComponent(query)}`;
     const response = await fetch(url, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'authorization': `Bearer ${token}` 
         }
     });
     const data = await response.json();
@@ -79,8 +124,13 @@ app.post('/saveScore', (req, res) => {
 });
 
 app.post('/getImage', (req, res) => {
-    const query = req.body.nome;
-    cercaImmagine(query).then((url) => {
+  console.log(req);
+    const nome = req.body.nome;
+    if (!nome) {
+        res.status(400).json({ error: 'nome is required' });
+        return;
+    }
+    cercaImmagine(nome).then((url) => {
         res.json({ url });
     });
 })
