@@ -3,6 +3,8 @@ const app = express();
 const port = 3002;
 const fs = require('fs');
 
+app.use(express.json());
+
 const firebaseConfig = {
   apiKey: "AIzaSyBPYEFH9F6JwguI4DGTTXXDl0JA6cJZ4mQ",
   authDomain: "spotydma.web.app",
@@ -79,14 +81,14 @@ async function registerToken() {
 async function getToken() {
     const url = "https://api.openverse.org/v1/auth_tokens/token/";
     const body = {
+        "grant_type": "client_credentials",
         "client_id": client_id,
-        "client_secret": client_secret,
-        "grant_type": "client_credentials"
+        "client_secret": client_secret
     };
     const response = await fetch(url, {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/x-www-form-urlencoded"
         },
         body: JSON.stringify(body)
     });
@@ -97,22 +99,28 @@ async function getToken() {
 
 
 async function cercaImmagine(query) {
-  registerToken();
-    const url = `https://api.openverse.org/v1/images/?q=${encodeURIComponent(query)}`;
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}` 
-        }
-    });
-    const data = await response.json();
-    
-    if (data.results.length > 0) {
-        return data.results[0].url;
-    } else {
-        return "Nessuna immagine trovata.";
-    }
+  if (!token) {
+      await registerToken(); // assicura che il token venga creato
+  }
+
+  const url = `https://api.openverse.org/v1/images/?q=${encodeURIComponent(query)}`;
+
+  const response = await fetch(url, {
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+  });
+
+  const data = await response.json();
+
+  if (data.results && data.results.length > 0) {
+      return data.results[0].url; // prima immagine trovata
+  } else {
+      return "Nessuna immagine trovata.";
+  }
 }
 
 app.post('/saveScore', (req, res) => {
@@ -123,17 +131,21 @@ app.post('/saveScore', (req, res) => {
     res.sendStatus(200);
 });
 
-app.post('/getImage', (req, res) => {
-  console.log(req);
-    const nome = req.body.nome;
-    if (!nome) {
-        res.status(400).json({ error: 'nome is required' });
-        return;
-    }
-    cercaImmagine(nome).then((url) => {
-        res.json({ url });
-    });
-})
+app.post('/getImage', async (req, res) => {
+  const nome = req.body.nome;
+
+  if (!nome) {
+      return res.status(400).json({ error: 'nome is required' });
+  }
+
+  try {
+      const url = await cercaImmagine(nome);
+      res.json({ url });
+  } catch (error) {
+      console.error("Errore nella ricerca immagine:", error);
+      res.status(500).json({ error: "Errore durante la ricerca immagine." });
+  }
+});
 
 app.post('/getDataMonth', (req, res) => {
     res.json(dataMonth);

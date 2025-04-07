@@ -86,7 +86,7 @@
                             'Content-Type': 'application/json',
                             'x-service': 'game'
                         },
-                        body: JSON.stringify({nome: query || '404 Not Found'})    
+                        body: JSON.stringify({nome: query})
                     });
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
