@@ -46,14 +46,14 @@ app.use(async (req, res) => {
      * La response ricevuta dal servizio viene inoltrata al client.
      */
     const { method, headers, body } = req;
-    console.log(body);
+    //console.log(body);
     const response = await axios({
         url,
         method,
         headers,
         data: body
     });
-    console.log(response.data);
+    //console.log(response.data);
     res.send(response.data);
 });
 
