@@ -137,7 +137,7 @@
             }*/
     
             async function displayArtist(artist, elementId) {    //controlla
-                console.log(datiImmagini);
+                //console.log(datiImmagini);
                 try{
                     const img = datiImmagini.find(item => item.nome == artist.title)?.url || 'https://live.staticflickr.com/3271/2438128901_f6fcf23134_b.jpg';
                     const element = document.getElementById(elementId);

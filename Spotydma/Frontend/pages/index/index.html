@@ -39,6 +39,15 @@
             </form>
             <div id="responseContainer"></div>
         </div>
+
+            <div class="container">
+                <h1>Hai domande? Chiedi a Gemini!</h1>
+                <form id="myFormGen" action="http://localhost:3001/genera" method="POST">
+                    <input type="text" name="search" placeholder="Inserisci la domanda" required>
+                    <button type="submit">Genera</button>
+                </form>
+                <div id="responseContainerAI"></div>
+            </div>
         <div id="footer">
             <div class="footer_container">
                 <iframe

@@ -86,6 +86,19 @@ button:hover {
     justify-content: center;
 }
 
+#responseContainerAI {
+    width: 75%;
+    height: auto;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #b3b3b3; /* Grigio chiaro */
+    text-align: justify;
+}
+#responseContainerAI .title {
+    text-align: center;
+    justify-content: center;
+}
+
 /* Form di login */
 #myFormLogin {
     display: block;

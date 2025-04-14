@@ -86,6 +86,50 @@ $(document).ready(function() {
             document.querySelector('#responseContainer').innerHTML = `<p>Errore durante il recupero dei dati.</p>`;
         });
     });
+
+    $("#myFormGen").submit(function(event) {
+        event.preventDefault(); // Evita il comportamento predefinito del form
+
+        // Serializza i dati del form
+        const formData = new FormData(this); // Raccoglie tutti i dati del form
+        const actionUrl = this.getAttribute('action'); // Recupera l'endpoint dal form
+
+        // Crea un oggetto per convertire FormData in JSON
+        const formDataJson = {};
+        formData.forEach((value, key) => {
+            formDataJson[key] = value;
+        });
+
+        // Effettua una richiesta POST usando Fetch
+        fetch(actionUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-service': 'ai'
+            },
+            body: JSON.stringify(formDataJson), // Invia i dati come JSON
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text(); // Converte la risposta in testo
+        })
+        .then(data => {
+            const htmlContent = `
+            <h2>Risultati dell'intelligenza artificiale</h2>
+            <p class="risposta">
+                ${data}
+            </p>
+            `;
+            
+            document.querySelector('#responseContainerAI').innerHTML = htmlContent;
+        })
+        .catch(error => { 
+            console.error('Errore nella richiesta:', error);
+            document.querySelector('#responseContainerAI').innerHTML = `<p>Errore durante il recupero dei dati.</p>`;
+        });
+    });
 });
 
 
