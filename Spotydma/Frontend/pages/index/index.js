@@ -32,6 +32,7 @@ $(document).ready(function() {
             //const [datiSearch, accessToken] = data.split('|');
             const datiSearch = data[0];
             const accessToken = data[1];
+
             console.log('Dati ricevuti:', datiSearch.playlists.items);
             console.log(accessToken);
             const htmlContent = `
@@ -39,19 +40,19 @@ $(document).ready(function() {
             <div class="grid-item">
                     <h2 id:"title">Playlist:</h2>
                     <ul>
-                        ${datiSearch.playlists.items.map(playlist => playlist ? `<li>${playlist.name}</li>` : '').join('')}
+                        ${datiSearch.playlists.items.map(playlists => `<li><img id="playlistCover" src= "${playlists.images[0]?.url || 'https://png.pngtree.com/png-vector/20241012/ourlarge/pngtree-cat-listening-to-music-with-headphones-png-image_13995938.png'}" height="40px" width="40px" alt=""><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/playlist/${playlists.id}?utm_source=generator&theme=0'; setCookie('playlistId', '${playlists.id}', 4); return false;"> ${playlists.name}</a></li>`).join('')}
                     </ul>
                 </div>
              <div class="grid-item">
                     <h2 id:"title">Tracks:</h2>
                     <ul>
-                        ${datiSearch.tracks.items.map(track => `<li>  <img id="albumCover" src="${track.album.images[0]?.url || 'https://png.pngtree.com/png-vector/20241012/ourlarge/pngtree-cat-listening-to-music-with-headphones-png-image_13995938.png'}" height="40px" width="40px" alt=""> <a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}', 4); return false;">${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
+                        ${datiSearch.tracks.items.map(track => `<li>  <img id="trackCover" src="${track.album.images[0]?.url || 'https://png.pngtree.com/png-vector/20241012/ourlarge/pngtree-cat-listening-to-music-with-headphones-png-image_13995938.png'}" height="40px" width="40px" alt=""> <a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0'; setCookie('trackId', '${track.id}', 4); return false;">${track.name}  -  ${track.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="grid-item">
                     <h2 id:"title">Albums:</h2>
                     <ul>
-                        ${datiSearch.albums.items.map(album => `<li><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/album/${album.id}?utm_source=generator&theme=0'; setCookie('albumId', '${album.id}', 4); return false;"> ${album.name}  -  ${album.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
+                        ${datiSearch.albums.items.map(album => `<li><img id="albumCover" src= "${album.images[0]?.url || 'https://png.pngtree.com/png-vector/20241012/ourlarge/pngtree-cat-listening-to-music-with-headphones-png-image_13995938.png'}" height="40px" width="40px" alt=""><a href="" onclick="document.getElementById('player').src = 'https://open.spotify.com/embed/album/${album.id}?utm_source=generator&theme=0'; setCookie('albumId', '${album.id}', 4); return false;"> ${album.name}  -  ${album.artists.map(artist => artist.name).join(', ')}</a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="grid-item">
