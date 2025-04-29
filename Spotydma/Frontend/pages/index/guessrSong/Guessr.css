@@ -1,0 +1,26 @@
+body {
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  button, input {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+  }
+  
+  #result {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+  

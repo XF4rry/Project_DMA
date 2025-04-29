@@ -286,7 +286,7 @@ body {
 }
 
 .current::after {
-  content: 'HIGHER';
+
   position: absolute;
   bottom: 15px;
   left: 50%;
@@ -301,7 +301,7 @@ body {
 }
 
 .next::after {
-  content: 'HIGHER';
+
   position: absolute;
   bottom: 15px;
   left: 50%;
