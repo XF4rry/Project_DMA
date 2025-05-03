@@ -1,22 +1,43 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <title>Indovina la Canzone</title>
-  <link rel="stylesheet" href="Guessr.css">
-</head>
-<body>
-  <div class="container">
-    <h1>🎶 Indovina la Canzone</h1>
-    <button id="startButton">🎧 Ascolta Anteprima</button>
-    <audio id="audio" controls></audio>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spoty Trivia HoL </title>
+       <!-- <script src="spotifymonthly-data.js"></script> -->
+       <!-- <script type="text/javascript" src="monthly.js"></script> -->
+        <link rel="stylesheet" href="Guessr.css">
+    </head>
 
-    <input type="text" id="guessInput" placeholder="Scrivi il titolo...">
-    <button id="submitGuess">Invia</button>
+    <body>
+        <div class="container">
+            <div class="game">
+                <div class="title">
+                    <h1>Higher or Lower: Monthly Listeners</h1>
+                    <li><a href="/">Home</a></li> 
+                    <li><a href="/select">scegli modalità</a></li> 
+                </div>
+                <div class="buttons">
+                    <button class="btn" onclick="startGame()"><span></span><p data-start="good luck!" data-text="start!" data-title="new game">Start!! </p></button>
+                </div>
+                <div class="Nickname"><input type="text" placeholder="Nickname..."></div>
+                <div class="container">
+                    <button class="current" id="current" onclick="checkGuess(false)">
+                        
+                    </button>
+                    <div class="score" id="score">
 
-    <div id="result"></div>
-  </div>
-
-  <script src="Guessr.js"></script>
-</body>
+                    </div>
+                    <button class="next" id="next" onclick="checkGuess(true)">
+                      
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+        <script>
+          
+    
+        </script>
+    </body>
+   
 </html>
