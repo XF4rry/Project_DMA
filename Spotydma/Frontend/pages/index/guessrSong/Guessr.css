@@ -1,26 +1,400 @@
+/* Reset e stili di base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    background-color: #111;
-    color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 50px;
+  font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+  background-color: #121212;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.game {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn {
+  background-color: #1DB954;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #1ed760;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn:disabled {
+  background-color: #535353;
+  cursor: not-allowed;
+  transform: none;
+}
+
+input {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+  background-color: #282828;
+  color: #ffffff;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #1DB954;
+}
+
+/* Header */
+header {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #282828;
+  text-align: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title h1 {
+  color: #1DB954;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+/* Navigation */
+.title li {
+  display: inline-block;
+  margin: 0 10px;
+  list-style: none;
+}
+
+.title a {
+  color: #b3b3b3;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.title a:hover {
+  color: #ffffff;
+  background-color: #282828;
+}
+
+.score-container {
+  background-color: #282828;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+/* Game Container */
+main {
+  flex: 1;
+}
+
+#game-container {
+  background-color: #181818;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  margin-bottom: 30px;
+  min-height: 400px;
+}
+
+/* Screen Management */
+.hidden-screen {
+  display: none;
+}
+
+.active-screen {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Welcome Screen */
+#welcome-screen h2 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#welcome-screen p {
+  margin-bottom: 30px;
+  font-size: 18px;
+  color: #b3b3b3;
+  text-align: center;
+}
+
+.difficulty {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.difficulty p {
+  color: #b3b3b3;
+}
+
+.difficulty select {
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  margin-top: 10px;
+  background-color: #282828;
+  color: #ffffff;
+}
+
+/* Game Screen */
+.song-container {
+  background-color: #282828;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  text-align: center;
+  position: relative;
+}
+
+.play-controls {
+  margin-bottom: 15px;
+}
+
+.play-controls button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: #1DB954;
+}
+
+.play-controls button:hover {
+  transform: scale(1.1);
+  background-color: #1ed760;
+}
+
+.play-controls button svg {
+  fill: #ffffff;
+}
+
+.progress-bar {
+  height: 4px;
+  background-color: #535353;
+  border-radius: 2px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+#progress {
+  height: 100%;
+  background-color: #1DB954;
+  width: 100%;
+  transition: width 1s linear;
+}
+
+.time-remaining {
+  font-size: 14px;
+  font-weight: bold;
+  color: #b3b3b3;
+}
+
+.guess-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.hints {
+  background-color: #282828;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.hints p {
+  color: #b3b3b3;
+}
+
+#hint-text {
+  font-style: italic;
+  color: #ffffff;
+}
+
+.hint-btn {
+  background-color: #535353;
+  margin-right: 15px;
+  margin-top: 10px;
+}
+
+.hint-btn:hover {
+  background-color: #686868;
+}
+
+#hints-left {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.skip-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.skip-btn {
+  background-color: #535353;
+}
+
+.skip-btn:hover {
+  background-color: #686868;
+}
+
+/* Result Screen */
+#result-screen {
+  text-align: center;
+}
+
+.song-info {
+  background-color: #282828;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.song-info p {
+  margin: 10px 0;
+  font-size: 18px;
+  color: #b3b3b3;
+}
+
+.song-info p span {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+#result-message {
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.correct {
+  background-color: rgba(29, 185, 84, 0.3);
+  color: #1DB954;
+}
+
+.incorrect {
+  background-color: rgba(229, 9, 20, 0.3);
+  color: #E50914;
+}
+
+#end-game {
+  background-color: #E50914;
+  margin-left: 15px;
+}
+
+#end-game:hover {
+  background-color: #f40612;
+}
+
+/* Game Over Screen */
+#game-over-screen {
+  text-align: center;
+}
+
+#game-over-screen h2 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+#game-over-screen p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: #b3b3b3;
+}
+
+#final-score {
+  font-weight: bold;
+  color: #1DB954;
+  font-size: 2rem;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  color: #b3b3b3;
+  padding: 20px 0;
+  margin-top: auto;
+  border-top: 1px solid #282828;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game {
+      padding: 15px;
   }
   
-  .container {
-    max-width: 600px;
-    margin: auto;
+  .title h1 {
+      font-size: 1.8rem;
   }
   
-  button, input {
-    padding: 10px 20px;
-    font-size: 18px;
-    margin: 10px;
-    border-radius: 10px;
-    border: none;
+  .guess-container {
+      flex-direction: column;
   }
   
-  #result {
-    margin-top: 20px;
-    font-size: 20px;
+  #game-container {
+      padding: 20px;
   }
   
+  .title li {
+      margin: 5px;
+  }
+}

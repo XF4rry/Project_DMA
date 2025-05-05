@@ -16,6 +16,11 @@
         "source": "/monthly",
         "destination": "/monthly/monthly.html",
         "type": 301
+      },
+      {
+        "source": "/guessr",
+        "destination": "/guessrSong/Guessr.html",
+        "type": 301
       }
     ],
     "ignore": [

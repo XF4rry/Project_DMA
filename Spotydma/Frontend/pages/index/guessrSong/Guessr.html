@@ -1,43 +1,480 @@
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Spoty Trivia HoL </title>
-       <!-- <script src="spotifymonthly-data.js"></script> -->
-       <!-- <script type="text/javascript" src="monthly.js"></script> -->
-        <link rel="stylesheet" href="Guessr.css">
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="game">
-                <div class="title">
-                    <h1>Higher or Lower: Monthly Listeners</h1>
-                    <li><a href="/">Home</a></li> 
-                    <li><a href="/select">scegli modalità</a></li> 
-                </div>
-                <div class="buttons">
-                    <button class="btn" onclick="startGame()"><span></span><p data-start="good luck!" data-text="start!" data-title="new game">Start!! </p></button>
-                </div>
-                <div class="Nickname"><input type="text" placeholder="Nickname..."></div>
-                <div class="container">
-                    <button class="current" id="current" onclick="checkGuess(false)">
-                        
-                    </button>
-                    <div class="score" id="score">
-
-                    </div>
-                    <button class="next" id="next" onclick="checkGuess(true)">
-                      
-                    </button>
-                </div>
-                
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indovina la Canzone</title>
+    <link rel="stylesheet" href="Guessr.css">
+</head>
+<body>
+    <div class="game">
+        <header>
+            <div class="title">
+                <h1>Guess the song</h1>
+                <li><a href="/">Home</a></li> 
+                <li><a href="/select">scegli modalità</a></li> 
             </div>
-        </div>
-        <script>
-          
-    
-        </script>
-    </body>
-   
+        </header>
+
+        <main>
+            <div id="game-container">
+                <div id="welcome-screen" class="active-screen">
+                    <h2>Benvenuto al Gioco Indovina la Canzone!</h2>
+                    <p>Ascolta un breve clip e indovina il titolo della canzone.</p>
+                    <div class="Nickname"><input type="text" placeholder="Nickname..."></div>
+                    <h2></h2>
+                    <button id="start-game" class="btn">Inizia il Gioco</button>
+                    <div class="difficulty">
+                        <p>Seleziona la difficoltà:</p>
+                        <select id="difficulty-select">
+                            <option value="easy">Facile</option>
+                            <option value="medium" selected>Media</option>
+                            <option value="hard">Difficile</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="game-screen" class="hidden-screen">
+                    <div class="song-container">
+                        <div class="score-container">
+                            <span>Punteggio: <span id="score">0</span></span>
+                        </div>
+                        <div class="play-controls">
+                            <button id="play-clip" class="btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" stroke="#ffffff" stroke-width="0">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progress"></div>
+                        </div>
+                        <div class="time-remaining" id="time-display">00:15</div>
+                    </div>
+
+                    <div class="guess-container">
+                        <input type="text" id="song-guess" placeholder="Inserisci il titolo della canzone..." autocomplete="off">
+                        <button id="submit-guess" class="btn">Indovina</button>
+                    </div>
+
+                    <div class="hints">
+                        <p>Indizi: <span id="hint-text">Usa un indizio per ricevere aiuto</span></p>
+                        <button id="get-hint" class="btn hint-btn">Richiedi Indizio</button>
+                        <span id="hints-left">3 indizi rimasti</span>
+                    </div>
+
+                    <div class="skip-container">
+                        <button id="skip-song" class="btn skip-btn">Salta Canzone</button>
+                    </div>
+                </div>
+
+                <div id="result-screen" class="hidden-screen">
+                    <h2 id="result-message">Risultato</h2>
+                    <div class="song-info">
+                        <p>Canzone: <span id="song-title">Titolo Canzone</span></p>
+                        <p>Artista: <span id="song-artist">Nome Artista</span></p>
+                    </div>
+                    <button id="next-song" class="btn">Prossima Canzone</button>
+                    <button id="end-game" class="btn">Termina Gioco</button>
+                </div>
+
+                <div id="game-over-screen" class="hidden-screen">
+                    <h2>Fine del Gioco!</h2>
+                    <p>Il tuo punteggio finale è: <span id="final-score">0</span></p>
+                    <button id="play-again" class="btn">Gioca Ancora</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Indovina la Canzone &copy; 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variabili del gioco
+            let score = 0;
+            let currentSong = null;
+            let hintsLeft = 3;
+            let timer = null;
+            let timeLeft = 15;
+            
+            // Database delle canzoni (normalmente verrebbe da un'API o database esterno)
+            const songs = [
+                { title: "Volare", artist: "Domenico Modugno", hints: ["Canzone italiana famosa", "Nel blu dipinto di blu", "1958"] },
+                { title: "Nel blu dipinto di blu", artist: "Domenico Modugno", hints: ["Conosciuta anche come Volare", "Festival di Sanremo", "Successo mondiale"] },
+                { title: "Bella Ciao", artist: "Tradizionale", hints: ["Canzone partigiana", "La Casa di Carta", "Resistenza italiana"] },
+                { title: "Ti Amo", artist: "Umberto Tozzi", hints: ["Grande successo anni '70", "Molto romantica", "Umberto T."] },
+                { title: "Felicità", artist: "Al Bano e Romina Power", hints: ["Duo famoso", "Canzone allegra", "Festival di Sanremo"] },
+                { title: "Sarà perché ti amo", artist: "Ricchi e Poveri", hints: ["Gruppo italiano", "Molto ritmata", "Anni '80"] },
+                { title: "L'Italiano", artist: "Toto Cutugno", hints: ["Lasciatemi cantare", "Cappuccino e spaghetti", "Orgoglio italiano"] },
+                { title: "Gloria", artist: "Umberto Tozzi", hints: ["Maniac, maniac", "Grande successo internazionale", "Umberto T."] },
+                { title: "La Solitudine", artist: "Laura Pausini", hints: ["Marco se n'è andato", "Laura P.", "Prima grande hit"] },
+                { title: "Senza una Donna", artist: "Zucchero", hints: ["Without a woman", "Sugar", "Duetto con Paul Young"] }
+            ];
+            
+            // Elementi DOM
+            const startGameBtn = document.getElementById('start-game');
+            const playClipBtn = document.getElementById('play-clip');
+            const submitGuessBtn = document.getElementById('submit-guess');
+            const getHintBtn = document.getElementById('get-hint');
+            const skipSongBtn = document.getElementById('skip-song');
+            const nextSongBtn = document.getElementById('next-song');
+            const endGameBtn = document.getElementById('end-game');
+            const playAgainBtn = document.getElementById('play-again');
+            
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const resultScreen = document.getElementById('result-screen');
+            const gameOverScreen = document.getElementById('game-over-screen');
+            
+            const songGuessInput = document.getElementById('song-guess');
+            const hintText = document.getElementById('hint-text');
+            const hintsLeftSpan = document.getElementById('hints-left');
+            const scoreDisplay = document.getElementById('score');
+            const finalScoreDisplay = document.getElementById('final-score');
+            const resultMessage = document.getElementById('result-message');
+            const songTitle = document.getElementById('song-title');
+            const songArtist = document.getElementById('song-artist');
+            const timeDisplay = document.getElementById('time-display');
+            const progressBar = document.getElementById('progress');
+            
+            // Cambiare schermata
+            function showScreen(screen) {
+                [welcomeScreen, gameScreen, resultScreen, gameOverScreen].forEach(s => {
+                    if (s === screen) {
+                        s.classList.remove('hidden-screen');
+                        s.classList.add('active-screen');
+                    } else {
+                        s.classList.add('hidden-screen');
+                        s.classList.remove('active-screen');
+                    }
+                });
+            }
+            
+            // Inizia il gioco
+            startGameBtn.addEventListener('click', function() {
+                showScreen(gameScreen);
+                startRound();
+            });
+            
+            // Simula la riproduzione di un clip musicale
+            playClipBtn.addEventListener('click', function() {
+                // Reset timer
+                clearInterval(timer);
+                timeLeft = 15;
+                updateTimer();
+                
+                // Start new timer
+                timer = setInterval(function() {
+                    timeLeft--;
+                    updateTimer();
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        showResult(false);
+                    }
+                }, 1000);
+            });
+            
+            // Aggiorna il timer visivo
+            function updateTimer() {
+                const seconds = timeLeft < 10 ? '0' + timeLeft : timeLeft;
+                timeDisplay.textContent = `00:${seconds}`;
+                const progressWidth = (timeLeft / 15) * 100;
+                progressBar.style.width = `${progressWidth}%`;
+            }
+            
+            // Submit guess
+            submitGuessBtn.addEventListener('click', function() {
+                checkGuess();
+            });
+            
+            songGuessInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    checkGuess();
+                }
+            });
+            
+            // Check if the guess is correct
+            function checkGuess() {
+                const guess = songGuessInput.value.trim().toLowerCase();
+                if (!guess) return;
+                
+                const isCorrect = guess === currentSong.title.toLowerCase();
+                showResult(isCorrect);
+            }
+            
+            // Get a hint
+            getHintBtn.addEventListener('click', function() {
+                if (hintsLeft > 0) {
+                    const hintIndex = 3 - hintsLeft;
+                    if (hintIndex < currentSong.hints.length) {
+                        hintText.textContent = currentSong.hints[hintIndex];
+                        hintsLeft--;
+                        hintsLeftSpan.textContent = `${hintsLeft} indizi rimasti`;
+                    }
+                }
+                
+                if (hintsLeft <= 0) {
+                    getHintBtn.disabled = true;
+                }
+            });
+            
+            // Skip song
+            skipSongBtn.addEventListener('click', function() {
+                showResult(false);
+            });
+            
+            // Next song
+            nextSongBtn.addEventListener('click', function() {
+                showScreen(gameScreen);
+                startRound();
+            });
+            
+            // End game
+            endGameBtn.addEventListener('click', function() {
+                finalScoreDisplay.textContent = score;
+                showScreen(gameOverScreen);
+            });
+            
+            // Play again
+            playAgainBtn.addEventListener('click', function() {
+                score = 0;
+                scoreDisplay.textContent = score;
+                showScreen(welcomeScreen);
+            });
+            
+            // Start a new round
+            function startRound() {
+                // Clear previous
+                songGuessInput.value = '';
+                hintText.textContent = 'Usa un indizio per ricevere aiuto';
+                hintsLeft = 3;
+                hintsLeftSpan.textContent = `${hintsLeft} indizi rimasti`;
+                getHintBtn.disabled = false;
+                clearInterval(timer);
+                timeLeft = 15;
+                updateTimer();
+                
+                // Select a random song
+                const randomIndex = Math.floor(Math.random() * songs.length);
+                currentSong = songs[randomIndex];
+            }
+            
+            // Show result
+            function showResult(isCorrect) {
+                clearInterval(timer);
+                
+                if (isCorrect) {
+                    score += 10;
+                    scoreDisplay.textContent = score;
+                    resultMessage.textContent = 'Corretto!';
+                    resultMessage.className = 'correct';
+                } else {
+                    resultMessage.textContent = 'Sbagliato!';
+                    resultMessage.className = 'incorrect';
+                }
+                
+                songTitle.textContent = currentSong.title;
+                songArtist.textContent = currentSong.artist;
+                showScreen(resultScreen);
+            }
+        });
+    </script>
+</body>
+</html>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variabili del gioco
+            let score = 0;
+            let currentSong = null;
+            let hintsLeft = 3;
+            let timer = null;
+            let timeLeft = 15;
+            
+            // Database delle canzoni (normalmente verrebbe da un'API o database esterno)
+            const songs = [
+                { title: "Volare", artist: "Domenico Modugno", hints: ["Canzone italiana famosa", "Nel blu dipinto di blu", "1958"] },
+                { title: "Nel blu dipinto di blu", artist: "Domenico Modugno", hints: ["Conosciuta anche come Volare", "Festival di Sanremo", "Successo mondiale"] },
+                { title: "Bella Ciao", artist: "Tradizionale", hints: ["Canzone partigiana", "La Casa di Carta", "Resistenza italiana"] },
+                { title: "Ti Amo", artist: "Umberto Tozzi", hints: ["Grande successo anni '70", "Molto romantica", "Umberto T."] },
+                { title: "Felicità", artist: "Al Bano e Romina Power", hints: ["Duo famoso", "Canzone allegra", "Festival di Sanremo"] },
+                { title: "Sarà perché ti amo", artist: "Ricchi e Poveri", hints: ["Gruppo italiano", "Molto ritmata", "Anni '80"] },
+                { title: "L'Italiano", artist: "Toto Cutugno", hints: ["Lasciatemi cantare", "Cappuccino e spaghetti", "Orgoglio italiano"] },
+                { title: "Gloria", artist: "Umberto Tozzi", hints: ["Maniac, maniac", "Grande successo internazionale", "Umberto T."] },
+                { title: "La Solitudine", artist: "Laura Pausini", hints: ["Marco se n'è andato", "Laura P.", "Prima grande hit"] },
+                { title: "Senza una Donna", artist: "Zucchero", hints: ["Without a woman", "Sugar", "Duetto con Paul Young"] }
+            ];
+            
+            // Elementi DOM
+            const startGameBtn = document.getElementById('start-game');
+            const playClipBtn = document.getElementById('play-clip');
+            const submitGuessBtn = document.getElementById('submit-guess');
+            const getHintBtn = document.getElementById('get-hint');
+            const skipSongBtn = document.getElementById('skip-song');
+            const nextSongBtn = document.getElementById('next-song');
+            const endGameBtn = document.getElementById('end-game');
+            const playAgainBtn = document.getElementById('play-again');
+            
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const resultScreen = document.getElementById('result-screen');
+            const gameOverScreen = document.getElementById('game-over-screen');
+            
+            const songGuessInput = document.getElementById('song-guess');
+            const hintText = document.getElementById('hint-text');
+            const hintsLeftSpan = document.getElementById('hints-left');
+            const scoreDisplay = document.getElementById('score');
+            const finalScoreDisplay = document.getElementById('final-score');
+            const resultMessage = document.getElementById('result-message');
+            const songTitle = document.getElementById('song-title');
+            const songArtist = document.getElementById('song-artist');
+            const timeDisplay = document.getElementById('time-display');
+            const progressBar = document.getElementById('progress');
+            
+            // Cambiare schermata
+            function showScreen(screen) {
+                [welcomeScreen, gameScreen, resultScreen, gameOverScreen].forEach(s => {
+                    if (s === screen) {
+                        s.classList.remove('hidden-screen');
+                        s.classList.add('active-screen');
+                    } else {
+                        s.classList.add('hidden-screen');
+                        s.classList.remove('active-screen');
+                    }
+                });
+            }
+            
+            // Inizia il gioco
+            startGameBtn.addEventListener('click', function() {
+                showScreen(gameScreen);
+                startRound();
+            });
+            
+            // Simula la riproduzione di un clip musicale
+            playClipBtn.addEventListener('click', function() {
+                // Reset timer
+                clearInterval(timer);
+                timeLeft = 15;
+                updateTimer();
+                
+                // Start new timer
+                timer = setInterval(function() {
+                    timeLeft--;
+                    updateTimer();
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        showResult(false);
+                    }
+                }, 1000);
+            });
+            
+            // Aggiorna il timer visivo
+            function updateTimer() {
+                const seconds = timeLeft < 10 ? '0' + timeLeft : timeLeft;
+                timeDisplay.textContent = `00:${seconds}`;
+                const progressWidth = (timeLeft / 15) * 100;
+                progressBar.style.width = `${progressWidth}%`;
+            }
+            
+            // Submit guess
+            submitGuessBtn.addEventListener('click', function() {
+                checkGuess();
+            });
+            
+            songGuessInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    checkGuess();
+                }
+            });
+            
+            // Check if the guess is correct
+            function checkGuess() {
+                const guess = songGuessInput.value.trim().toLowerCase();
+                if (!guess) return;
+                
+                const isCorrect = guess === currentSong.title.toLowerCase();
+                showResult(isCorrect);
+            }
+            
+            // Get a hint
+            getHintBtn.addEventListener('click', function() {
+                if (hintsLeft > 0) {
+                    const hintIndex = 3 - hintsLeft;
+                    if (hintIndex < currentSong.hints.length) {
+                        hintText.textContent = currentSong.hints[hintIndex];
+                        hintsLeft--;
+                        hintsLeftSpan.textContent = `${hintsLeft} indizi rimasti`;
+                    }
+                }
+                
+                if (hintsLeft <= 0) {
+                    getHintBtn.disabled = true;
+                }
+            });
+            
+            // Skip song
+            skipSongBtn.addEventListener('click', function() {
+                showResult(false);
+            });
+            
+            // Next song
+            nextSongBtn.addEventListener('click', function() {
+                showScreen(gameScreen);
+                startRound();
+            });
+            
+            // End game
+            endGameBtn.addEventListener('click', function() {
+                finalScoreDisplay.textContent = score;
+                showScreen(gameOverScreen);
+            });
+            
+            // Play again
+            playAgainBtn.addEventListener('click', function() {
+                score = 0;
+                scoreDisplay.textContent = score;
+                showScreen(welcomeScreen);
+            });
+            
+            // Start a new round
+            function startRound() {
+                // Clear previous
+                songGuessInput.value = '';
+                hintText.textContent = 'Usa un indizio per ricevere aiuto';
+                hintsLeft = 3;
+                hintsLeftSpan.textContent = `${hintsLeft} indizi rimasti`;
+                getHintBtn.disabled = false;
+                clearInterval(timer);
+                timeLeft = 15;
+                updateTimer();
+                
+                // Select a random song
+                const randomIndex = Math.floor(Math.random() * songs.length);
+                currentSong = songs[randomIndex];
+            }
+            
+            // Show result
+            function showResult(isCorrect) {
+                clearInterval(timer);
+                
+                if (isCorrect) {
+                    score += 10;
+                    scoreDisplay.textContent = score;
+                    resultMessage.textContent = 'Corretto!';
+                    resultMessage.className = 'correct';
+                } else {
+                    resultMessage.textContent = 'Sbagliato!';
+                    resultMessage.className = 'incorrect';
+                }
+                
+                songTitle.textContent = currentSong.title;
+                songArtist.textContent = currentSong.artist;
+                showScreen(resultScreen);
+            }
+        });
+    </script>
+</body>
 </html>
