@@ -24,7 +24,7 @@
                     <div class="Nickname"><input type="text" placeholder="Nickname..."></div>
                     <h2></h2>
                     <button id="start-game" class="btn">Inizia il Gioco</button>
-                    <div class="difficulty">
+                    <div hidden="true" class="difficulty">
                         <p>Seleziona la difficoltà:</p>
                         <select id="difficulty-select">
                             <option value="easy">Facile</option>
@@ -39,7 +39,7 @@
                         <div class="score-container">
                             <span>Punteggio: <span id="score">0</span></span>
                         </div>
-                        <div class="play-controls">
+                       <div class="play-controls" hidden="true">
                             <button id="play-clip" class="btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" stroke="#ffffff" stroke-width="0">
                                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -49,7 +49,35 @@
                         <div class="progress-bar">
                             <div id="progress"></div>
                         </div>
-                        <div class="time-remaining" id="time-display">00:15</div>
+
+                        <div class="player-container">
+                            <div class="absolute  bg-[#282828] rounded-md">
+                                <p>---Song Playing---</p>
+
+                            </div>
+                            <iframe
+                                id="player"
+                                title="Spotify Embed: Recommendation Playlist"
+                                src=''
+                                frameBorder="0"
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                loading="lazy">
+                            </iframe>
+                            <div class="player-overlay">
+                                <!-- Add any overlay content here -->
+                           <!-- <div class="player-overlay-background" style="
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background-color: rgba(0,0,0,0.5);
+                                z-index: 1;
+                            "></div>-->
+                            
+                            </div>
+                        </div>
+                        <div class="time-remaining" id="time-display" hidden="true">00:15</div>
                     </div>
 
                     <div class="guess-container">
@@ -70,7 +98,31 @@
 
                 <div id="result-screen" class="hidden-screen">
                     <h2 id="result-message">Risultato</h2>
+                    
                     <div class="song-info">
+                        <div class="player-container">
+                            <iframe
+                                id="playerGuess"
+                                title="Spotify Embed: Recommendation Playlist"
+                                src=''
+                                frameBorder="0"
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                loading="lazy">
+                            </iframe>
+                            <div class="player-overlay">
+                                <!-- Add any overlay content here -->
+                           <!-- <div class="player-overlay-background" style="
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background-color: rgba(0,0,0,0.5);
+                                z-index: 1;
+                            "></div>-->
+                            
+                            </div>
+                        </div>
                         <p>Canzone: <span id="song-title">Titolo Canzone</span></p>
                         <p>Artista: <span id="song-artist">Nome Artista</span></p>
                     </div>
@@ -102,20 +154,22 @@
             
             // Database delle canzoni (normalmente verrebbe da un'API o database esterno)
             const songs = [
-                { title: "Volare", artist: "Domenico Modugno", hints: ["Canzone italiana famosa", "Nel blu dipinto di blu", "1958"] },
-                { title: "Nel blu dipinto di blu", artist: "Domenico Modugno", hints: ["Conosciuta anche come Volare", "Festival di Sanremo", "Successo mondiale"] },
-                { title: "Bella Ciao", artist: "Tradizionale", hints: ["Canzone partigiana", "La Casa di Carta", "Resistenza italiana"] },
-                { title: "Ti Amo", artist: "Umberto Tozzi", hints: ["Grande successo anni '70", "Molto romantica", "Umberto T."] },
-                { title: "Felicità", artist: "Al Bano e Romina Power", hints: ["Duo famoso", "Canzone allegra", "Festival di Sanremo"] },
-                { title: "Sarà perché ti amo", artist: "Ricchi e Poveri", hints: ["Gruppo italiano", "Molto ritmata", "Anni '80"] },
-                { title: "L'Italiano", artist: "Toto Cutugno", hints: ["Lasciatemi cantare", "Cappuccino e spaghetti", "Orgoglio italiano"] },
-                { title: "Gloria", artist: "Umberto Tozzi", hints: ["Maniac, maniac", "Grande successo internazionale", "Umberto T."] },
-                { title: "La Solitudine", artist: "Laura Pausini", hints: ["Marco se n'è andato", "Laura P.", "Prima grande hit"] },
-                { title: "Senza una Donna", artist: "Zucchero", hints: ["Without a woman", "Sugar", "Duetto con Paul Young"] }
+                { title: "Nothing Changed", artist: "Quavo", id: "37If4sC0Si28T6z63qhR5z", hints: ["non si cambial", "Hip-Hop americano", "Only Built for Infinity Links"] },
+                { title: "Lose Yourself", artist: "Eminem", id: "7MJQ9Nfxzh8LPZ9e9u68Fq", hints: ["Rap God", "Oscar", "8 Mile"] },
+                { title: "99 Problems", artist: "Jay-Z", id: "7IdFdRlCjUi6kkhbPoRfnw", hints: ["Rap iconico", "Roc-A-Fella", "Problemi"] },
+                { title: "Gold Digger", artist: "Kanye West", id: "1bAO5Ob5wYq5sEqf3ThFFP", hints: ["Chiama sua madre", "Rap/R&B", "College Dropout"] },
+                { title: "Squabble Up", artist: "Kendrick Lamar", id: "0nj9Bq5sHDiTxSHunhgkFb", hints: ["Diss 2024/2025", "K-dot", "New Broccoli"] },
+                { title: "Unforgettable", artist: "French Montana & Swae Lee", id: "3B54sVLJ402zGa6Xm4YGNe", hints: ["Reggaeton", "Can't get you outta ma mind", "Album: Jungle Rules"] },
+                { title: "California Love", artist: "2Pac", id: "3ia3dJETSOllPsv3LJkE35", hints: ["Rap old school", "West Coast", "A Classic"] },
+                { title: "WAP", artist: "Cardi B, Megan Thee Stallions, Nicki Minaj", id: "4Oun2ylbjFKMPTiaSbbCih", hints: ["Regine del Rap", "Twerk", "TikTok viral"] },
+                { title: "Trap Queen", artist: "Fetty Wap", id: "0TzxcB6dK46vgXZT2P8qeR", hints: ["Rap del New Jersey", "Trap", "Fetty Wap"] },
+                { title: "A Milli", artist: "Lil Wayne", id: "3uqinR4FCjLv28bkrTdNX5", hints: ["Rap del Sud", "Weezy", "The Carter III"] }
             ];
             
             // Elementi DOM
-            const startGameBtn = document.getElementById('start-game');
+            const startGameBtn = document.getElementById('start-game')
+            const srcPlayer = document.getElementById('player');
+            const srcPlayerGuess = document.getElementById('playerGuess');
             const playClipBtn = document.getElementById('play-clip');
             const submitGuessBtn = document.getElementById('submit-guess');
             const getHintBtn = document.getElementById('get-hint');
@@ -249,6 +303,7 @@
             function startRound() {
                 // Clear previous
                 songGuessInput.value = '';
+                
                 hintText.textContent = 'Usa un indizio per ricevere aiuto';
                 hintsLeft = 3;
                 hintsLeftSpan.textContent = `${hintsLeft} indizi rimasti`;
@@ -260,6 +315,7 @@
                 // Select a random song
                 const randomIndex = Math.floor(Math.random() * songs.length);
                 currentSong = songs[randomIndex];
+                srcPlayer.src=`https://open.spotify.com/embed/track/${currentSong.id}?utm_source=generator&theme=0`;
             }
             
             // Show result
@@ -275,201 +331,7 @@
                     resultMessage.textContent = 'Sbagliato!';
                     resultMessage.className = 'incorrect';
                 }
-                
-                songTitle.textContent = currentSong.title;
-                songArtist.textContent = currentSong.artist;
-                showScreen(resultScreen);
-            }
-        });
-    </script>
-</body>
-</html>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Variabili del gioco
-            let score = 0;
-            let currentSong = null;
-            let hintsLeft = 3;
-            let timer = null;
-            let timeLeft = 15;
-            
-            // Database delle canzoni (normalmente verrebbe da un'API o database esterno)
-            const songs = [
-                { title: "Volare", artist: "Domenico Modugno", hints: ["Canzone italiana famosa", "Nel blu dipinto di blu", "1958"] },
-                { title: "Nel blu dipinto di blu", artist: "Domenico Modugno", hints: ["Conosciuta anche come Volare", "Festival di Sanremo", "Successo mondiale"] },
-                { title: "Bella Ciao", artist: "Tradizionale", hints: ["Canzone partigiana", "La Casa di Carta", "Resistenza italiana"] },
-                { title: "Ti Amo", artist: "Umberto Tozzi", hints: ["Grande successo anni '70", "Molto romantica", "Umberto T."] },
-                { title: "Felicità", artist: "Al Bano e Romina Power", hints: ["Duo famoso", "Canzone allegra", "Festival di Sanremo"] },
-                { title: "Sarà perché ti amo", artist: "Ricchi e Poveri", hints: ["Gruppo italiano", "Molto ritmata", "Anni '80"] },
-                { title: "L'Italiano", artist: "Toto Cutugno", hints: ["Lasciatemi cantare", "Cappuccino e spaghetti", "Orgoglio italiano"] },
-                { title: "Gloria", artist: "Umberto Tozzi", hints: ["Maniac, maniac", "Grande successo internazionale", "Umberto T."] },
-                { title: "La Solitudine", artist: "Laura Pausini", hints: ["Marco se n'è andato", "Laura P.", "Prima grande hit"] },
-                { title: "Senza una Donna", artist: "Zucchero", hints: ["Without a woman", "Sugar", "Duetto con Paul Young"] }
-            ];
-            
-            // Elementi DOM
-            const startGameBtn = document.getElementById('start-game');
-            const playClipBtn = document.getElementById('play-clip');
-            const submitGuessBtn = document.getElementById('submit-guess');
-            const getHintBtn = document.getElementById('get-hint');
-            const skipSongBtn = document.getElementById('skip-song');
-            const nextSongBtn = document.getElementById('next-song');
-            const endGameBtn = document.getElementById('end-game');
-            const playAgainBtn = document.getElementById('play-again');
-            
-            const welcomeScreen = document.getElementById('welcome-screen');
-            const gameScreen = document.getElementById('game-screen');
-            const resultScreen = document.getElementById('result-screen');
-            const gameOverScreen = document.getElementById('game-over-screen');
-            
-            const songGuessInput = document.getElementById('song-guess');
-            const hintText = document.getElementById('hint-text');
-            const hintsLeftSpan = document.getElementById('hints-left');
-            const scoreDisplay = document.getElementById('score');
-            const finalScoreDisplay = document.getElementById('final-score');
-            const resultMessage = document.getElementById('result-message');
-            const songTitle = document.getElementById('song-title');
-            const songArtist = document.getElementById('song-artist');
-            const timeDisplay = document.getElementById('time-display');
-            const progressBar = document.getElementById('progress');
-            
-            // Cambiare schermata
-            function showScreen(screen) {
-                [welcomeScreen, gameScreen, resultScreen, gameOverScreen].forEach(s => {
-                    if (s === screen) {
-                        s.classList.remove('hidden-screen');
-                        s.classList.add('active-screen');
-                    } else {
-                        s.classList.add('hidden-screen');
-                        s.classList.remove('active-screen');
-                    }
-                });
-            }
-            
-            // Inizia il gioco
-            startGameBtn.addEventListener('click', function() {
-                showScreen(gameScreen);
-                startRound();
-            });
-            
-            // Simula la riproduzione di un clip musicale
-            playClipBtn.addEventListener('click', function() {
-                // Reset timer
-                clearInterval(timer);
-                timeLeft = 15;
-                updateTimer();
-                
-                // Start new timer
-                timer = setInterval(function() {
-                    timeLeft--;
-                    updateTimer();
-                    if (timeLeft <= 0) {
-                        clearInterval(timer);
-                        showResult(false);
-                    }
-                }, 1000);
-            });
-            
-            // Aggiorna il timer visivo
-            function updateTimer() {
-                const seconds = timeLeft < 10 ? '0' + timeLeft : timeLeft;
-                timeDisplay.textContent = `00:${seconds}`;
-                const progressWidth = (timeLeft / 15) * 100;
-                progressBar.style.width = `${progressWidth}%`;
-            }
-            
-            // Submit guess
-            submitGuessBtn.addEventListener('click', function() {
-                checkGuess();
-            });
-            
-            songGuessInput.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    checkGuess();
-                }
-            });
-            
-            // Check if the guess is correct
-            function checkGuess() {
-                const guess = songGuessInput.value.trim().toLowerCase();
-                if (!guess) return;
-                
-                const isCorrect = guess === currentSong.title.toLowerCase();
-                showResult(isCorrect);
-            }
-            
-            // Get a hint
-            getHintBtn.addEventListener('click', function() {
-                if (hintsLeft > 0) {
-                    const hintIndex = 3 - hintsLeft;
-                    if (hintIndex < currentSong.hints.length) {
-                        hintText.textContent = currentSong.hints[hintIndex];
-                        hintsLeft--;
-                        hintsLeftSpan.textContent = `${hintsLeft} indizi rimasti`;
-                    }
-                }
-                
-                if (hintsLeft <= 0) {
-                    getHintBtn.disabled = true;
-                }
-            });
-            
-            // Skip song
-            skipSongBtn.addEventListener('click', function() {
-                showResult(false);
-            });
-            
-            // Next song
-            nextSongBtn.addEventListener('click', function() {
-                showScreen(gameScreen);
-                startRound();
-            });
-            
-            // End game
-            endGameBtn.addEventListener('click', function() {
-                finalScoreDisplay.textContent = score;
-                showScreen(gameOverScreen);
-            });
-            
-            // Play again
-            playAgainBtn.addEventListener('click', function() {
-                score = 0;
-                scoreDisplay.textContent = score;
-                showScreen(welcomeScreen);
-            });
-            
-            // Start a new round
-            function startRound() {
-                // Clear previous
-                songGuessInput.value = '';
-                hintText.textContent = 'Usa un indizio per ricevere aiuto';
-                hintsLeft = 3;
-                hintsLeftSpan.textContent = `${hintsLeft} indizi rimasti`;
-                getHintBtn.disabled = false;
-                clearInterval(timer);
-                timeLeft = 15;
-                updateTimer();
-                
-                // Select a random song
-                const randomIndex = Math.floor(Math.random() * songs.length);
-                currentSong = songs[randomIndex];
-            }
-            
-            // Show result
-            function showResult(isCorrect) {
-                clearInterval(timer);
-                
-                if (isCorrect) {
-                    score += 10;
-                    scoreDisplay.textContent = score;
-                    resultMessage.textContent = 'Corretto!';
-                    resultMessage.className = 'correct';
-                } else {
-                    resultMessage.textContent = 'Sbagliato!';
-                    resultMessage.className = 'incorrect';
-                }
-                
+                srcPlayerGuess.src=`https://open.spotify.com/embed/track/${currentSong.id}?utm_source=generator&theme=0`;
                 songTitle.textContent = currentSong.title;
                 songArtist.textContent = currentSong.artist;
                 showScreen(resultScreen);
