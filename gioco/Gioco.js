@@ -12,42 +12,7 @@ const fs = require('fs');
 
 app.use(express.json());
 
-// Firebase setup
-const firebaseConfig = {
-  apiKey: "AIzaSyBPYEFH9F6JwguI4DGTTXXDl0JA6cJZ4mQ",
-  authDomain: "spotydma.web.app",
-  projectId: "spotydma",
-  storageBucket: "spotydma.firebasestorage.app",
-  messagingSenderId: "833117624421",
-  appId: "1:833117624421:web:e66b3fe3251d82ecb5ce8c",
-  measurementId: "G-H2B0CFKM4Y"
-};
 
-const { initializeApp } = require("firebase/app");
-const { getFirestore, collection, addDoc, getDocs } = require("firebase/firestore");
-const appFirebase = initializeApp(firebaseConfig);
-const db = getFirestore(appFirebase);
-
-// Salvataggio punteggio
-async function createUser(db, score, nickname) {
-  try {
-    const docRef = await addDoc(collection(db, "classifica"), {
-      punteggio: score,
-      nick: nickname
-    });
-    console.log("Punteggio aggiunto: ", docRef.id);
-  } catch (e) {
-    console.error("Errore durante il salvataggio del punteggio: ", e);
-  }
-}
-
-// Lettura classifica (non usata direttamente qui, ma utile)
-async function getUsers(db) {
-  const querySnapshot = await getDocs(collection(db, "classifica"));
-  querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-  });
-}
 
 // Openverse Auth + Ricerca
 let client_id = "O2ZuuZmokLq2SWUH8kCQExFWo767F9P5knYsfvFg";
@@ -172,6 +137,92 @@ app.post('/getDataMonth', async (req, res) => {
 app.post('/getDataSong', (req, res) => {
 res.json(dataSong);
 })
+
+const mongoose = require('mongoose');
+const Song = require('./models/schema');
+
+// Dati delle canzoni
+const songs = [
+  {
+    title: "Sicko Mode",
+    artist: "Travis Scott",
+    id: "2xLMifQCjDGFmkHkpNLD9h",
+    hints: ["Astroworld", "Drake", "La Flame"]
+  },
+  {
+    title: "HUMBLE.",
+    artist: "Kendrick Lamar",
+    id: "7KXjTSCq5nL1LoYtL7XAwS",
+    hints: ["Sit down", "DAMN.", "Pulitzer"]
+  },
+  {
+    title: "Hotline Bling",
+    artist: "Drake",
+    id: "0wwPcA6wtMf6HUMpIRdeP7",
+    hints: ["Call me", "BBL Drizzy", "Viral meme"]
+  },
+  {
+    title: "God's Plan",
+    artist: "Drake",
+    id: "6DCZcSspjsKoFjzjrWoCdn",
+    hints: ["Blessings", "OVO", "Scorpion"]
+  },
+  {
+    title: "Goosebumps",
+    artist: "Travis Scott",
+    id: "6gBFPUFcJLzWGx4lenP6h2",
+    hints: ["Kendrick Lamar", "Birds in the Trap", "Chills"]
+  },
+  {
+    "title": "No Role Modelz",
+    "artist": "J. Cole",
+    "id": "68Dni7IE4VyPkTOH9mRWHr",
+    "hints": ["2014 Forest Hills Drive", "Hollywood", "Realness"]
+  },
+  {
+    "title": "Paint the Town Red",
+    "artist": "Doja Cat",
+    "id": "07UaJADUXYjVUKnoDBBFKR",
+    "hints": ["Scarlet", "First solo female rap song to top Spotify's Global chart", "Sample di Dionne Warwick"]
+  },
+  {
+    "title": "Sprinter",
+    "artist": "Dave & Central Cee",
+    "id": "3EyjOXEMYKw6pjBKQGJNj2",
+    "hints": ["UK drill", "Split Decision EP", "Corsa estiva 2023"]
+  }
+];
+
+
+// Connessione a MongoDB (una volta sola)
+mongoose.connect('mongodb+srv://LilNigga:FATIHA01@nigga.lyz9vda.mongodb.net/Niggas?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(async () => {
+  console.log('✅ Connesso a MongoDB con mongoose');
+
+    const insertIfNotExists = async (newSongs) => {
+    for (const song of newSongs) {
+      const exists = await Song.findOne({ id: song.id });
+      if (!exists) {
+        await Song.create(song);
+      } else {
+        console.log(`⏩ Skippata: ${song.title} già presente`);
+      }
+    }
+  };
+  insertIfNotExists(moreSongs);
+  
+
+  // Mostra canzoni a console
+  const existingSongs = await Song.find({});
+  console.log('🎧 Canzoni trovate nel DB:');
+  existingSongs.forEach(s => console.log(`- ${s.title} di ${s.artist}`));
+})
+.catch(err => {
+  console.error('❌ Errore nella connessione Mongoose:', err);
+});
 
 // Avvio server
 app.listen(port, "0.0.0.0", () => {
