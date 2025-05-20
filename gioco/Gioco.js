@@ -142,7 +142,7 @@ const mongoose = require('mongoose');
 const Song = require('./models/schema');
 
 // Dati delle canzoni
-const songs = [
+const moreSongs = [
   {
     title: "Sicko Mode",
     artist: "Travis Scott",
@@ -174,22 +174,22 @@ const songs = [
     hints: ["Kendrick Lamar", "Birds in the Trap", "Chills"]
   },
   {
-    "title": "No Role Modelz",
-    "artist": "J. Cole",
-    "id": "68Dni7IE4VyPkTOH9mRWHr",
-    "hints": ["2014 Forest Hills Drive", "Hollywood", "Realness"]
+    title: "No Role Modelz",
+    artist: "J. Cole",
+    id: "68Dni7IE4VyPkTOH9mRWHr",
+    hints: ["2014 Forest Hills Drive", "Hollywood", "Realness"]
   },
   {
-    "title": "Paint the Town Red",
-    "artist": "Doja Cat",
-    "id": "07UaJADUXYjVUKnoDBBFKR",
-    "hints": ["Scarlet", "First solo female rap song to top Spotify's Global chart", "Sample di Dionne Warwick"]
+    title: "Paint the Town Red",
+    artist: "Doja Cat",
+    id: "07UaJADUXYjVUKnoDBBFKR",
+    hints: ["Scarlet", "First solo female rap song to top Spotify's Global chart", "Sample di Dionne Warwick"]
   },
   {
-    "title": "Sprinter",
-    "artist": "Dave & Central Cee",
-    "id": "3EyjOXEMYKw6pjBKQGJNj2",
-    "hints": ["UK drill", "Split Decision EP", "Corsa estiva 2023"]
+    title: "Sprinter",
+    artist: "Dave & Central Cee",
+    id: "3EyjOXEMYKw6pjBKQGJNj2",
+    hints: ["UK drill", "Split Decision EP", "Corsa estiva 2023"]
   }
 ];
 
@@ -202,8 +202,8 @@ mongoose.connect('mongodb+srv://LilNigga:FATIHA01@nigga.lyz9vda.mongodb.net/Nigg
 .then(async () => {
   console.log('✅ Connesso a MongoDB con mongoose');
 
-    const insertIfNotExists = async (newSongs) => {
-    for (const song of newSongs) {
+    const insertIfNotExists = async (moreSongs) => {
+    for (const song of moreSongs) {
       const exists = await Song.findOne({ id: song.id });
       if (!exists) {
         await Song.create(song);
@@ -212,7 +212,7 @@ mongoose.connect('mongodb+srv://LilNigga:FATIHA01@nigga.lyz9vda.mongodb.net/Nigg
       }
     }
   };
-  insertIfNotExists(moreSongs);
+  await insertIfNotExists(moreSongs);
   
 
   // Mostra canzoni a console
@@ -226,5 +226,5 @@ mongoose.connect('mongodb+srv://LilNigga:FATIHA01@nigga.lyz9vda.mongodb.net/Nigg
 
 // Avvio server
 app.listen(port, "0.0.0.0", () => {
-  console.log(`Higher or Lower game server running on port ${port}`);
+  console.log(`Game server running on port ${port}`);
 });

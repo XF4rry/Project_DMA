@@ -36,3 +36,25 @@ document.getElementById("submitGuess").addEventListener("click", () => {
     result.style.color = "red";
   }
 });
+
+// song guessr
+const mongoose = require('mongoose');
+
+const uri = "mongodb+srv://LilNigga:FATIHA01@nigga.lyz9vda.mongodb.net/Niggas?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    const database = client.db("your_database_name");
+    const collection = database.collection("your_collection_name");
+
+    const cursor = collection.find();
+    const results = await cursor.toArray();
+    console.log(results);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.error);
