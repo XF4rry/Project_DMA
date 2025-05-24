@@ -35,11 +35,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+           
             return response.json(); // Converte la risposta in JSON
         })
         .then(songs => {
           let previousIndexes
+          console.log(songs);
           // Elementi DOM
+
           const startGameBtn = document.getElementById('start-game');
           const srcPlayer = document.getElementById('player');
           const srcPlayerGuess = document.getElementById('playerGuess');
@@ -186,13 +189,12 @@ document.addEventListener('DOMContentLoaded', function() {
               clearInterval(timer);
               timeLeft = 15;
               updateTimer();
-              
               // Select a random song
               let randomIndex;
-              do {
+              //do {
                   randomIndex = Math.floor(Math.random() * songs.length);
-              } while (previousIndexes.includes(randomIndex));
-              previousIndexes.push(randomIndex);
+              //} while (previousIndexes.indexOf(randomIndex) !== -1);
+              //previousIndexes.push(randomIndex);
               currentSong = songs[randomIndex];
               srcPlayer.setAttribute('src',`https://open.spotify.com/embed/track/${currentSong.id}?utm_source=generator&theme=0`);
           }

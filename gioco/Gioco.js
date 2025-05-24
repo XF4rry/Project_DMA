@@ -215,7 +215,7 @@ app.post("/getSongGuessr", (req, res) => {
     await insertIfNotExists(moreSongs);
     
 
-    // Mostra canzoni a console
+    // Mostra canzoni a console dal DB
     const existingSongs = await Song.find({});
     console.log('🎧 Canzoni trovate nel DB:');
     existingSongs.forEach(s => console.log(`- ${s.title} di ${s.artist}`));
