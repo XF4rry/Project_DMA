@@ -193,36 +193,42 @@ const moreSongs = [
   }
 ];
 
+app.post("/getSongGuessr", (req, res) => {
+  // Connessione a MongoDB (una volta sola)
+  mongoose.connect('mongodb+srv://LilNigga:FATIHA01@nigga.lyz9vda.mongodb.net/Niggas?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(async () => {
+    console.log('✅ Connesso a MongoDB con mongoose');
 
-// Connessione a MongoDB (una volta sola)
-mongoose.connect('mongodb+srv://LilNigga:FATIHA01@nigga.lyz9vda.mongodb.net/Niggas?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(async () => {
-  console.log('✅ Connesso a MongoDB con mongoose');
-
-    const insertIfNotExists = async (moreSongs) => {
-    for (const song of moreSongs) {
-      const exists = await Song.findOne({ id: song.id });
-      if (!exists) {
-        await Song.create(song);
-      } else {
-        console.log(`⏩ Skippata: ${song.title} già presente`);
+      const insertIfNotExists = async (moreSongs) => {
+      for (const song of moreSongs) {
+        const exists = await Song.findOne({ id: song.id });
+        if (!exists) {
+          await Song.create(song);
+        } else {
+          console.log(`⏩ Skippata: ${song.title} già presente`);
+        }
       }
-    }
-  };
-  await insertIfNotExists(moreSongs);
-  
+    };
+    await insertIfNotExists(moreSongs);
+    
 
-  // Mostra canzoni a console
-  const existingSongs = await Song.find({});
-  console.log('🎧 Canzoni trovate nel DB:');
-  existingSongs.forEach(s => console.log(`- ${s.title} di ${s.artist}`));
+    // Mostra canzoni a console
+    const existingSongs = await Song.find({});
+    console.log('🎧 Canzoni trovate nel DB:');
+    existingSongs.forEach(s => console.log(`- ${s.title} di ${s.artist}`));
+    res.json(existingSongs);
+  })
+  .catch(err => {
+    console.error('❌ Errore nella connessione Mongoose:', err);
+    res.json(err);
+  }); 
+  
 })
-.catch(err => {
-  console.error('❌ Errore nella connessione Mongoose:', err);
-});
+
+
 
 // Avvio server
 app.listen(port, "0.0.0.0", () => {
