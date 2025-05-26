@@ -448,6 +448,7 @@ body {
 }
 
 /* Play Count Display */
+/*
 .current p,
 .next p {
   background: rgba(29, 185, 84, 0.1);
@@ -463,3 +464,4 @@ body {
 .next:hover p {
   background: rgba(29, 185, 84, 0.2);
 }
+  */

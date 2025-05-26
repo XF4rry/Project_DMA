@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json(); // Converte la risposta in JSON
         })
         .then(songs => {
-          let previousIndexes
+          let previousIndexes = [];
           console.log(songs);
           // Elementi DOM
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
           startGameBtn.addEventListener('click', function() {
               showScreen(gameScreen);
               startRound();
-              randomIndexes = [];
+              previousIndexes = [];
           });
           
           // Simula la riproduzione di un clip musicale
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   }
               }, 1000);
           });
-          //diocane
+          
           
           // Aggiorna il timer visivo
           function updateTimer() {
@@ -191,12 +191,13 @@ document.addEventListener('DOMContentLoaded', function() {
               updateTimer();
               // Select a random song
               let randomIndex;
-              //do {
+              do {
                   randomIndex = Math.floor(Math.random() * songs.length);
-              //} while (previousIndexes.indexOf(randomIndex) !== -1);
-              //previousIndexes.push(randomIndex);
+              } while (previousIndexes.indexOf(randomIndex) !== -1);
+              previousIndexes.push(randomIndex);
               currentSong = songs[randomIndex];
               srcPlayer.setAttribute('src',`https://open.spotify.com/embed/track/${currentSong.id}?utm_source=generator&theme=0`);
+              //console.log(previousIndexes);
           }
           
           // Show result

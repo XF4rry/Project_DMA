@@ -114,27 +114,6 @@
                 //console.log(i);
                 return dati[i];
             }
-
-            /*async function getImages(query){
-                try {
-                    const response = await fetch("http://localhost:3001/getImage", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-service': 'game'
-                        },
-                        body: JSON.stringify({nome: query})
-                    });
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    console.log(query);
-                    return data;
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                }
-            }*/
     
             async function displayArtist(artist, elementId) {    //controlla
                 //console.log(datiImmagini);
@@ -146,7 +125,7 @@
                         element.innerHTML = `
                             <h2>${artist.title}</h2>
                             <img src="${img}" alt="${artist.title}">
-                            <p>Play Count: ${artist.playCount}</p>
+                            <p hidden="true" id="playcount">Play Count: ${artist.playCount}</p>
                         `;
                     } else {
                         console.error(`Element with id ${elementId} not found.`);
@@ -181,17 +160,18 @@
                 .then(data => console.log(data))
                 .catch(error => console.error('Errore durante il salvataggio del punteggio:', error));
             }
-            function checkGuess(isHigher) {
-                // Confronta il valore di playCount dell'artista corrente con l'artista successivo
-                // e stabilisce se la risposta dell'utente  corretta o meno
-                // Se "isHigher"  true, la risposta  corretta se il valore di playCount dell'artista successivo 
-                //  maggiore del valore di playCount dell'artista corrente
-                // Altrimenti, se "isHigher"  false, la risposta  corretta se il valore di playCount dell'artista successivo 
-                //  minore del valore di playCount dell'artista corrente
+            async function checkGuess(isHigher) {
                 let correct = isHigher ? nextArtist.playCount > currentArtist.playCount : nextArtist.playCount < currentArtist.playCount;
                 if (correct) {
                     score++;
                     document.getElementById("score").innerText = score;
+                    const playCountElementLeft = document.querySelectorAll("#playcount")[0];
+                    playCountElementLeft.hidden = false;
+                    const playCountElementRight = document.querySelectorAll("#playcount")[1];
+                    playCountElementRight.hidden = false;
+                    await wait2Seconds();
+                    playCountElementLeft.hidden = true;
+                    playCountElementRight.hidden = true;
                     currentArtist = nextArtist;
                     nextArtist = getRandomArtist();
                     while (currentArtist.title === nextArtist.title) {
@@ -201,9 +181,13 @@
                     displayArtist(nextArtist, "next");
                 } else {
                     alert("Game Over! Your score: " + score);
-                    //gameEnd(score);
                     score = 0;
                 }
+            }
+
+            function wait2Seconds() {
+                console.log("Attendi 2 secondi...");
+                return new Promise(resolve => setTimeout(resolve, 2000));
             }
     
         </script>

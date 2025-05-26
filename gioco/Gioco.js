@@ -141,7 +141,7 @@ res.json(dataSong);
 const mongoose = require('mongoose');
 const Song = require('./models/schema');
 
-// Dati delle canzoni
+// Parte per aggiungere canzoni al mongoDB in modo tale da gi volta ampliare la scelta
 const moreSongs = [
   {
     title: "Sicko Mode",
@@ -190,7 +190,86 @@ const moreSongs = [
     artist: "Dave & Central Cee",
     id: "3EyjOXEMYKw6pjBKQGJNj2",
     hints: ["UK drill", "Split Decision EP", "Corsa estiva 2023"]
+  },
+  {
+    title: "In Da Club",
+    artist: "50 Cent",
+    id: "7iL6o9tox1zgHpKUfh9vuC",
+    hints: ["Get Rich or Die Tryin'", "2003", "Go shorty, it's your birthday"]
+  },
+  {
+    title: "Without Me",
+    artist: "Eminem",
+    id: "7lQ8MOhq6IN2w8EYcFNSUk",
+    hints: ["The Eminem Show", "Guess who's back", "2002"]
+  },
+  {
+    title: "Gangsta's Paradise",
+    artist: "Coolio, L.V.",
+    id: "2PQ5At0Rnm4ogInS1ejZYl",
+    hints: ["Dangerous Minds", "1995", "LV chorus"]
+  },
+  {
+    title: "Mockingbird",
+    artist: "Eminem",
+    id: "561jH07mF1jHuk7KlaeF0s",
+    hints: ["Encore", "Hailie", "2004"]
+  },
+  {
+    title: "Not Like Us",
+    artist: "Kendrick Lamar",
+    id: "6AI3ezQ4o3HUoP6Dhudph3",
+    hints: ["Diss track", "2024", "Controversial lyrics"]
+  },
+  {
+    title: "FE!N",
+    artist: "Travis Scott, Playboi Carti",
+    id: "42VsgItocQwOQC3XWZ8JNA",
+    hints: ["Utopia", "2023", "High-energy collaboration"]
+  },
+  {
+    title: "Still D.R.E.",
+    artist: "Dr. Dre, Snoop Dogg",
+    id: "503OTo2dSqe7qk76rgsbep",
+    hints: ["2001", "Piano riff", "West Coast classic"]
+  },
+  {
+    title: "She Knows",
+    artist: "J. Cole, Amber Coffman, Cults",
+    id: "0Fs9cdPDhptWEDJmiCbkEW",
+    hints: ["Born Sinner", "2013", "Smooth melody"]
+  },
+  {
+    title: "Empire State Of Mind",
+    artist: "JAY-Z, Alicia Keys",
+    id: "3xkxcbnc7G3XYuZt6eUnI5",
+    hints: ["The Blueprint 3", "2009", "New York anthem"]
+  },
+  {
+    title: "EARFQUAKE",
+    artist: "Tyler, The Creator",
+    id: "5hVghJ4KaYES3BFUATCYn0",
+    hints: ["IGOR", "Playboi Carti", "Don't leave, it's my fault"]
+  },
+  {
+    title: "See You Again (feat. Kali Uchis)",
+    artist: "Tyler, The Creator",
+    id: "7KA4W4McWYRpgf0fWsJZWB",
+    hints: ["Flower Boy", "TikTok hit", "Dream pop vibes"]
+  },
+  {
+    title: "Thinkin Bout You",
+    artist: "Frank Ocean",
+    id: "7DfFc7a6Rwfi3YQMRbDMau",
+    hints: ["Channel Orange", "Falsetto", "Grammy-nominated"]
+  },
+  {
+    title: "Ivy",
+    artist: "Frank Ocean",
+    id: "2ZWlPOoWh0626oTaHrnl2a",
+    hints: ["Blonde", "Guitar-driven", "Nostalgic lyrics"]
   }
+  
 ];
 
 app.post("/getSongGuessr", (req, res) => {

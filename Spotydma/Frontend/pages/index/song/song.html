@@ -137,7 +137,7 @@
                             <h2>${song.title}</h2>
                             <h2>${song.artist}</h2>
                             <img src="${img}">
-                            <p>Play Count: ${song.playCount}</p>
+                            <p hidden="true" id="playcount">Play Count: ${song.playCount}</p>
                         `;
                     } else {
                         console.error(`Element with id ${elementId} not found.`);
@@ -172,7 +172,7 @@
                 .then(data => console.log(data))
                 .catch(error => console.error('Errore durante il salvataggio del punteggio:', error));
             }
-            function checkGuess(isHigher) {
+            async function checkGuess(isHigher) {
                 // Confronta il valore di playCount dell'artista corrente con l'artista successivo
                 // e stabilisce se la risposta dell'utente  corretta o meno
                 // Se "isHigher"  true, la risposta  corretta se il valore di playCount dell'artista successivo 
@@ -183,6 +183,13 @@
                 if (correct) {
                     score++;
                     document.getElementById("score").innerText = score;
+                    const playCountElementLeft = document.querySelectorAll("#playcount")[0];
+                    playCountElementLeft.hidden = false;
+                    const playCountElementRight = document.querySelectorAll("#playcount")[1];
+                    playCountElementRight.hidden = false;
+                    await wait2Seconds();
+                    playCountElementLeft.hidden = true;
+                    playCountElementRight.hidden = true;
                     currentSong = nextSong;
                     nextSong = getRandomSong();
                     while (currentSong.title === nextSong.title) {
@@ -195,6 +202,11 @@
                     //gameEnd(score);
                     score = 0;
                 }
+            }
+
+            function wait2Seconds() {
+                console.log("Attendi 2 secondi...");
+                return new Promise(resolve => setTimeout(resolve, 2000));
             }
     
         </script>
