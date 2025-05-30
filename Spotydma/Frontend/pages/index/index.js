@@ -117,14 +117,16 @@ $(document).ready(function() {
             return response.text(); // Converte la risposta in testo
         })
         .then(data => {
-            const htmlContent = `
+            /*const htmlContent = `
             <h2>Risultati dell'intelligenza artificiale</h2>
             <p class="risposta">
                 ${data}
             </p>
             `;
             
-            document.querySelector('#responseContainerAI').innerHTML = htmlContent;
+            document.querySelector('#responseContainerAI').innerHTML = htmlContent;*/
+
+            updateAIResponse(data, 'Gemini dice:'); // Usa la funzione per aggiornare la risposta
         })
         .catch(error => { 
             console.error('Errore nella richiesta:', error);
@@ -208,4 +210,106 @@ function logout() {
     document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';  //metto la scadenza del cookie nella passato così si cancella da solo
     document.getElementById('myFormLogin').style.display = 'block';
     document.getElementById('myFormLogout').style.display = 'none'; 
+}
+
+// Funzione per formattare la risposta dell'AI
+function formatAIResponse(text) {
+    if (!text) return '';
+    
+    // Dividi il testo in paragrafi più piccoli per una migliore leggibilità
+    let formatted = text
+        // Sostituisci punti seguiti da spazio e maiuscola con paragrafi
+        .replace(/\. ([A-Z])/g, '.\n\n$1')
+        // Aggiungi interruzioni per frasi molto lunghe
+        .replace(/([.!?])\s*([A-Z])/g, '$1\n\n$2')
+        // Gestisci le liste con asterischi
+        .replace(/\* /g, '\n• ')
+        // Gestisci i due punti seguiti da maiuscola (per sottotitoli)
+        .replace(/: ([A-Z])/g, ':\n\n**$1')
+        // Chiudi il grassetto dopo il punto
+        .replace(/\*\*([^*]+)\./g, '**$1**.')
+        // Pulisci spazi multipli
+        .replace(/\n\s*\n/g, '\n\n')
+        .trim();
+    
+    return formatted;
+}
+
+// Funzione per creare HTML strutturato dalla risposta
+function createStructuredHTML(text) {
+    const container = document.createElement('div');
+    
+    // Dividi il testo in sezioni
+    const sections = text.split('\n\n');
+    
+    sections.forEach(section => {
+        if (!section.trim()) return;
+        
+        // Controlla se è un titolo (inizia con **testo**)
+        if (section.match(/^\*\*[^*]+\*\*/)) {
+            const h3 = document.createElement('h3');
+            h3.textContent = section.replace(/\*\*/g, '');
+            container.appendChild(h3);
+        }
+        // Controlla se è una lista
+        else if (section.includes('• ')) {
+            const ul = document.createElement('ul');
+            const items = section.split('\n• ').filter(item => item.trim());
+            items.forEach(item => {
+                if (item.startsWith('• ')) item = item.substring(2);
+                const li = document.createElement('li');
+                li.textContent = item.trim();
+                ul.appendChild(li);
+            });
+            container.appendChild(ul);
+        }
+        // Paragrafo normale
+        else {
+            const p = document.createElement('p');
+            p.textContent = section.trim();
+            container.appendChild(p);
+        }
+    });
+    
+    return container.innerHTML;
+}
+
+// Modifica la gestione del form per migliorare la visualizzazione
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('myFormGen');
+    const responseContainer = document.getElementById('responseContainerAI');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Mostra indicatore di caricamento
+            responseContainer.innerHTML = '<div class="loading">Elaborazione in corso...</div>';
+            responseContainer.style.display = 'block';
+        });
+    }
+});
+
+// Funzione per aggiornare la risposta dell'AI (da chiamare quando ricevi la risposta)
+function updateAIResponse(responseText, title = 'Risultati dell\'intelligenza artificiale') {
+    const container = document.getElementById('responseContainerAI');
+    
+    if (!container) return;
+    
+    // Crea il contenuto formattato
+    const formattedText = formatAIResponse(responseText);
+    const structuredHTML = createStructuredHTML(formattedText);
+    
+    // Aggiorna il contenitore
+    container.innerHTML = `
+        <div class="title">${title}</div>
+        ${structuredHTML}
+    `;
+    
+    // Aggiungi animazione di fade-in
+    container.style.opacity = '0';
+    container.style.display = 'block';
+    
+    setTimeout(() => {
+        container.style.transition = 'opacity 0.5s ease-in-out';
+        container.style.opacity = '1';
+    }, 100);
 }

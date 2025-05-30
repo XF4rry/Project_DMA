@@ -4,16 +4,247 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wanna Play?</title>
-    <link rel="stylesheet" href="select.css">
+    <style>
+        /* Google Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #191414 0%, #1a1a1a 50%, #121212 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(29, 185, 84, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .container {
+            background: linear-gradient(145deg, rgba(25, 20, 20, 0.95), rgba(18, 18, 18, 0.95));
+            backdrop-filter: blur(10px);
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(29, 185, 84, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        
+        h1 {
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #1DB954, #1ed760);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 8px rgba(29, 185, 84, 0.3);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 35px;
+            letter-spacing: 0.5px;
+        }
+        
+        .game-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
+        .game-list li {
+            position: relative;
+        }
+        
+        .game-list a {
+            text-decoration: none;
+            color: #000;
+            background: linear-gradient(135deg, #1DB954, #1ed760);
+            padding: 18px 30px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.3px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 6px 20px rgba(29, 185, 84, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-list a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .game-list a:hover::before {
+            left: 100%;
+        }
+        
+        .game-list a:hover {
+            background: linear-gradient(135deg, #1ed760, #1DB954);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 12px 30px rgba(29, 185, 84, 0.4),
+                0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+        
+        .game-list a:active {
+            transform: translateY(-1px) scale(0.98);
+            transition: all 0.1s ease;
+        }
+        
+        .game-icon {
+            font-size: 22px;
+            margin-right: 15px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .game-list a:hover .game-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+        
+        .game-text {
+            flex-grow: 1;
+            text-align: left;
+        }
+        
+        .home-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 10px;
+        }
+        
+        .home-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1)) !important;
+            color: white !important;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .game-list a {
+                padding: 16px 25px;
+                font-size: 15px;
+            }
+            
+            .game-icon {
+                font-size: 20px;
+                margin-right: 12px;
+            }
+        }
+        
+        /* Pulse animation for accent */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #1DB954, transparent, #1DB954);
+            border-radius: 22px;
+            z-index: -1;
+            animation: pulse 3s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Higher or Lower: Spotify Edition</h1>
+        <h1>Higher or Lower</h1>
+        <p class="subtitle">Spotify Edition - Test your music knowledge!</p>
         <ul class="game-list">
-            <li><a href="/monthly">🎵 Artist's Monthly Listeners Game</a></li>
-            <li><a href="/song">🎶 Song's Total Plays Game</a></li>
-            <li><a href="/guessr">Guess the artist by the song</a></li>
-            <li><a href="/">🏠 Home</a></li>
+            <li>
+                <a href="/monthly">
+                    <span class="game-icon">🎵</span>
+                    <span class="game-text">Artist's Monthly Listeners Game</span>
+                </a>
+            </li>
+            <li>
+                <a href="/song">
+                    <span class="game-icon">🎶</span>
+                    <span class="game-text">Song's Total Plays Game</span>
+                </a>
+            </li>
+            <li>
+                <a href="/guessr">
+                    <span class="game-icon">🎤</span>
+                    <span class="game-text">Guess the Artist by Song</span>
+                </a>
+            </li>
+            <li>
+                <a href="/" class="home-btn">
+                    <span class="game-icon">🏠</span>
+                    <span class="game-text">Back to Home</span>
+                </a>
+            </li>
         </ul>
     </div>
 </body>

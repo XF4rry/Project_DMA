@@ -20,7 +20,7 @@
                     <button class="btn" onclick="startGame()"><span></span><p data-start="good luck!" data-text="start!" data-title="new game">Start!! </p></button>
                 </div>
                 <div class="Nickname"><input type="text" placeholder="Nickname..."></div>
-                <div class="container">
+                    <div class="container" id="game">
                     <button class="current" id="current" onclick="checkGuess(false)">
                         
                     </button>
@@ -99,7 +99,7 @@
             .catch(error => {
                 console.error('Errore durante il fetch dei dati:', error);
             });
-    
+            
             function startGame() {
                 currentArtist = getRandomArtist();
                 nextArtist = getRandomArtist();

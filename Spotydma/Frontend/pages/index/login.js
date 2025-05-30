@@ -1,16 +1,16 @@
 const clientId = "9ef96b2e27c342bd9337c8b8e0dc6c94"; // id web app spotify
-const code = undefined;
+let code = undefined;
 async function init() {
     console.log("login con frontend");
     const accessToken = await getAccessToken(clientId, code);
-        if (!code) {
+        if (code == undefined) {
         redirectToAuthCodeFlow(clientId);
     } else {
         const profile = await fetchProfile(accessToken);
         console.log(profile);
         console.log(accessToken);
         //populateUI(profile);
-         
+        
     }
 
 }
