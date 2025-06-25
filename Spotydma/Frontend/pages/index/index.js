@@ -133,6 +133,8 @@ $(document).ready(function() {
             document.querySelector('#responseContainerAI').innerHTML = `<p>Errore durante il recupero dei dati.</p>`;
         });
     });
+
+
 });
 
 
@@ -313,3 +315,25 @@ function updateAIResponse(responseText, title = 'Risultati dell\'intelligenza ar
         container.style.opacity = '1';
     }, 100);
 }
+document.addEventListener('DOMContentLoaded', function() {
+
+    const btnSearch = document.getElementById("clearBtnSearch");
+    const btnAI = document.getElementById("clearBtnAI");
+    const containerSearch = document.getElementById("responseContainer");
+    const containerAI = document.getElementById("responseContainerAI");
+    const ricercaSearch = document.getElementById("querySearch");
+    const ricercaAI = document.getElementById("queryGen");
+
+
+    // Aggiungi un gestore di eventi per il pulsante di reset della ricerca
+    btnAI.addEventListener("click", () => {
+      containerAI.innerHTML = "";
+      ricercaAI.value = ""; // Pulisce il campo di input della ricerca AI
+    });
+    
+    btnSearch.addEventListener("click", () => {
+      containerSearch.innerHTML = "";
+      ricercaSearch.value = ""; // Pulisce il campo di input della ricerca
+    });
+
+});

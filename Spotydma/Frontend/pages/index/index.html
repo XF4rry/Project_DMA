@@ -435,6 +435,23 @@
         .container:nth-child(even) {
             animation-delay: 0.2s;
         }
+
+        #clearBtnSearch, #clearBtnAI {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+        #clearBtnSearch:hover, #clearBtnAI:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        #clearBtnSearch:active, #clearBtnAI:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
     <body>
         <header>
@@ -461,19 +478,21 @@
         <div class="container">
             <h1>Cosa vuoi ascoltare?</h1>
             <form id="myFormYE" action="http://localhost:3001/search-artist" method="POST">
-                <input type="text" name="search" placeholder="Inserisci il nome dell'artista" required>
+                <input type="text" name="search" id="querySearch" placeholder="Inserisci il nome dell'artista" required>
                 <button type="submit">Cerca Artista</button>
             </form>
             <div id="responseContainer"></div>
+            <button id="clearBtnSearch">Clear</button>
         </div>
 
             <div class="container">
                 <h1>Hai domande? Chiedi a Gemini!</h1>
                 <form id="myFormGen" action="http://localhost:3001/genera" method="POST">
-                    <input type="text" name="search" placeholder="Inserisci la domanda" required>
+                    <input type="text" id="queryGen" name="search" placeholder="Inserisci la domanda" required>
                     <button type="submit">Genera</button>
                 </form>
                 <div id="responseContainerAI"></div>
+                <button id="clearBtnAI">Clear</button>
             </div>
         <div id="footer">
             <div class="footer_container">
