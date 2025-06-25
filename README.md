@@ -1,5 +1,3 @@
----
-
 # Spotify Companion
 
 Un'applicazione web che permette agli utenti di esplorare la musica su Spotify, creando playlist personalizzate, scoprendo nuovi brani e mettendo alla prova le proprie conoscenze musicali con giochi interattivi.
