@@ -1,5 +1,3 @@
-Certo! Ti aggiorno la descrizione aggiungendo anche i due giochi che avete sviluppato. Ecco come potresti riformulare la parte del progetto per renderla completa e chiara:
-
 ---
 
 # Spotify Companion
