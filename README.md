@@ -1,28 +1,37 @@
 # Spotify Companion
 
-"Un'applicazione web che permette agli utenti di esplorare la musica su Spotify, creando playlist personalizzate e scoprendo nuovi brani."  
+Un'applicazione web che permette agli utenti di esplorare la musica su Spotify, creando playlist personalizzate, scoprendo nuovi brani e mettendo alla prova le proprie conoscenze musicali con giochi interattivi.
 
-## Caratteristiche  
+## Caratteristiche
 
-- **Autenticazione Utente**: Gli utenti possono autenticarsi con il proprio account Spotify.  
-- **Ricerca Brani**: Ricerca brani, album e artisti attraverso l'API di Spotify.  
-- **Creazione Playlist**: Permette di creare e gestire playlist personali.
-- **Player Musicale**: Permette l'acolto di brani.
-- **Visualizzazione Raccomandazioni**: Suggerimenti di brani basati sulla tua musica preferita.  
+* **Autenticazione Utente**: Gli utenti possono autenticarsi con il proprio account Spotify.
+* **Ricerca Brani**: Ricerca brani, album e artisti attraverso l'API di Spotify.
+* **Creazione Playlist**: Permette di creare e gestire playlist personali.
+* **Player Musicale**: Permette l'ascolto di brani.
+* **Visualizzazione Raccomandazioni**: Suggerimenti di brani basati sulla tua musica preferita.
+* **Giochi Musicali**:
 
-## Tecnologie Utilizzate  
+  * *Higher or Lower - Artisti*: indovina quale artista ha più ascoltatori mensili.
+  * *Higher or Lower - Brani*: sfida tra due canzoni in base al numero totale di ascolti.
+  * *Song Guessr*: ascolta un'anteprima e prova a indovinare il titolo della canzone.
 
-- **Frontend**: ejs / HTML / css
-- **Backend**: Node.js / Express / axios / Fetch / Firebase
-- **API di Spotify**: Utilizzata per l'autenticazione e per accedere ai dati musicali.  
+## Tecnologie Utilizzate
 
-## Requisiti  
+* **Frontend**: EJS / HTML / CSS
+* **Backend**: Node.js / Express / Axios / Fetch / Firebase
+* **API di Spotify**: Utilizzata per l'autenticazione e per accedere ai dati musicali.
 
-- Node.js >= 14.x  
-- Un account su Spotify per l'autenticazione.
+## Requisiti
 
-## Installazione  
+* Node.js >= 14.x
+* Un account Spotify per l'autenticazione.
 
-1. Clona il repository:  
-   ```bash  
-   git clone https://github.com/XF4rry/Project_DMA
+## Installazione
+
+1. Clona il repository:
+
+   ```bash
+   git clone https://github.com/XF4rry/Project_DMA  
+   ```
+
+---
